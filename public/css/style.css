@@ -282,7 +282,7 @@ h2 {
 
 h3 { 
 	font-size: 1.1em;
-	margin:20px 0px 10px 0px;
+	margin:30px 0px 10px 0px;
 }
 
 h4 { 
@@ -362,15 +362,10 @@ label {
 }
 
 blockquote {
-	width:30%;
-	float:right;
-	padding:20px;
+	width:80%;
+	padding:5px 20px;
 	margin:20px;
 	margin-right:none;
-	font-size:18px;
-	line-height:28px;
-	font-family: 'NixieOneRegular';
-	font-style:italic;
 	font-weight:normal;
 	color:#333;
 	background-color:#ecf5f8;
@@ -397,7 +392,6 @@ ol {
 }
 
 li { 
-	font-size:13px;
 	letter-spacing:normal;
 	margin-bottom:10px;
 }
@@ -683,9 +677,14 @@ table.data th {
 
 table.data td {
     border: 1px solid #d0ebf3;
-    padding: 2px 5px;
+    padding: 4px 8px;
     background: #edf7f8;
     color: #177a9d;
+    white-space: pre-wrap;
+}
+
+table.data td.nowrap {
+    white-space: nowrap;
 }
 
 tr.d0 td {
@@ -856,4 +855,6 @@ code {
     background: #F5ECCE;
     border: 1px dashed grey;
     white-space: pre;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
 }

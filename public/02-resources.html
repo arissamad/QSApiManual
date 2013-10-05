@@ -1,0 +1,305 @@
+<html>
+<body>
+
+<div class="content">
+
+<h1 id="intro">REST Resources</h1>
+<p>The following are the list of resources that you can query or modify.
+</p>
+
+<blockquote>
+    <ul>
+        <li>SchoolGroups</li>
+        <li>Schools</li>
+        <li>Semesters</li>
+        <li>Users</li>
+        <li>SubjectSets</li>
+        <li>SetEnrollment</li>
+        <li>Assignments</li>
+        <li>Grades></li>
+    </ul>
+</blockquote>
+
+<h2 id="groups">SchoolGroups</h2>
+<p>In QuickSchools, groups of schools are organized as SchoolGroups. For example, a district would be set up as a SchoolGroup.</p>
+
+<h3>Resouce URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/api/v1/schoolgroup</td>
+        <td>Returns details of the current user's SchoolGroup.</td>
+    </tr>
+</table>
+
+<h3>JSON result</h3>
+<code>
+    {
+        schoolGroupId: "3""
+    }
+</code>
+
+<h2 id="schools">Schools</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/api/v1/schools</td>
+        <td>Returns the list of schools that belong to the current user's SchoolGroup.
+        
+If the school is an individual school that's not part of a group, a single school will be returned in the list.</td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/api/v1/schools/{school-id}</td>
+        <td>Returns the details of the specified school.</td>
+    </tr>
+</table>
+
+<h3>JSON result for a single school</h3>
+<code>
+    {
+        smsSchoolId: "3",
+        schoolCode: "applecreek",
+        schoolName: "Apple Creek School",
+        contactPerson: "John Smith",
+        address: "5 Palm Court, Sunnyvale, CA 94086",
+        email: "info@applecreekschool.edu",
+        website: "http://www.applecreekschool.edu",
+        schoolPhone: "(111) 444 4444"
+    }
+</code>
+
+<p>Notes:</p>
+<ul>
+    <li>The school phone is simply a user-entered string and is not guaranteed to match any particular format.</li>
+</ul>
+
+<h2 id="semesters">Semesters</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/api/v1/semesters</td>
+        <td>Returns the list of semesters.</td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/api/v1/semesters/{semester-id}</td>
+        <td>Returns the details of the specified semester.</td>
+    </tr>
+</table>
+
+<h3>JSON result for a single semester</h3>
+<code>
+    {
+        semesterId: "3",
+        semesterName: "1st Quarter",
+        yearId: "3",
+        yearName: "2013/2014",
+        startDate: "2013-01-01",
+        endDate: "2013-05-01",
+        isActive: true
+    }
+</code>
+
+<p>Notes:</p>
+
+<ul>
+    <li>There is always a semester which is the current active semester. This will have isActive = true.</li>
+    <li>Multiple semesters can belong under a year. Semesters with the same parent year will simply return the same year details.</li>
+</ul>
+
+
+<h2 id="users">People</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/api/v1/people</td>
+        <td>Returns the list of all people in the system. These include teachers, students, parents & guardians.</td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/api/v1/people/{person-id}</td>
+        <td>Returns the details of the specified person.</td>
+    </tr>
+</table>
+
+<h3>JSON result for a single student</h3>
+<code>
+    {
+        personId: "s-3",
+        type: "student",
+        fullName: "John Smith",
+        gender: "male",
+        username: "",
+        email: "john@applecreekschool.edu",
+        thumbnailUrl: "http://someurl"
+    }
+</code>
+
+<p>Notes:</p>
+<ul>
+    <li>Type can be "student", "teacher" or "parent".</li>
+    <li>username may be blank. Not all people records are users who log in. For example, a parent record may be added without login access.</li>
+</ul>
+
+<h3>JSON result for a single teacher</h3>
+<code>
+    {
+        personId: "t-3",
+        type: "teacher",
+        fullName: "Anne Smith",
+        gender: "female",
+        username: "anne@applecreekschool.edu",
+        email: "john@applecreekschool.edu",
+        thumbnailUrl: "http://someurl",
+        isSchoolAdmin: true
+    }
+</code>
+
+<p>Notes:</p>
+<ul>
+    <li>Teacher records also include the "isSchoolAdmin" field. If true, this user has full administrative rights in the system.</li>
+</ul>
+
+<h3>JSON result for a single parent</h3>
+<code>
+    {
+        personId: "p-3",
+        type: "parent",
+        fullName: "Maya Karin",
+        gender: "female",
+        username: "",
+        email: "mayakarin@mailinator.com",
+        thumbnailUrl: "http://someurl",
+        parentRelationshipName: "Mother"
+        parentRelationshipMetaId: "mother"
+    }
+</code>
+
+<p>Notes:</p>
+<ul>
+    <li>Parent records also include the relationship. There is a default list of relationships in the system, but users may add, change or delete them. For the default system relationships, the parentRelationshipMetaId is set by the system & is immutable. They are: father, mother, guardian.</li>
+</ul>
+
+<h2 id="subject-sets">SubjectSets</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/api/v1/subjectsets</td>
+        <td>Returns the list of all subject sets.</td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/api/v1/subjectsets/{subjectset-id}</td>
+        <td>Returns the details of the specified subject set.</td>
+    </tr>
+</table>
+
+<h3>JSON result for a single subject set</h3>
+<code>
+    {
+        subjectSetId: "3",
+        setCode: "ENG-01",
+        setName: "English 01"
+        classId: "12993",
+        className: "5th Grade"
+    }
+</code>
+
+<p>Notes</p>
+<ul>
+    <li>Class refers to the grade level, such as 5th grade. Users can create custom grade levels.</li>
+</ul>
+
+<h2 id="set-enrollments">SetEnrollments</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/api/v1/setenrollments</td>
+        <td>Returns the list of all people enrolled. This includes teachers as well as students.</td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/api/v1/setenrollments/{subjectset-id}</td>
+        <td>Returns the enrollments for a specific subject set.</td>
+    </tr>
+</table>
+
+<h3>JSON result for the enrollments of a single subject set:</h3>
+<code>
+    {
+        subjectSetId: "3",
+        enrollments: [
+            {
+                personId: "3",
+                type: "teacher"
+            },
+            {
+                personId: "2",
+                type: "student"
+            }
+        ]
+    }
+</code>
+
+<h2 id="homework">Homework</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/api/v1/homework</td>
+        <td>Returns the list of all homework assigned.</td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/api/v1/homework/{homework-id}</td>
+        <td>Returns the details of a single homework assignment.</td>
+    </tr>
+    <tr>
+        <td>POST</td>
+        <td class="nowrap">/api/v1/homework</td>
+        <td>Creates a homework assignment for a specified subject set.</td>
+    </tr>
+    <tr>
+        <td>PUT</td>
+        <td class="nowrap">/api/v1/homework/${homework-id}</td>
+        <td>Updates an existing homework assignment.</td>
+    </tr>
+    <tr>
+        <td>DELETE</td>
+        <td class="nowrap">/api/v1/homework/${homework-id}</td>
+        <td>Deletes an existing homework assignment.</td>
+    </tr>
+</table>
+
+<h2 id="grades">Grades</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/api/v1/grades</td>
+        <td>Returns the list of students and the grades achieved for the specified assignment.</td>
+    </tr>
+    <tr>
+        <td>PUT</td>
+        <td class="nowrap">/api/v1/grades</td>
+        <td>Updates the grades achieved by students for the specified assignment.</td>
+    </tr>
+</table>
+
+</div>
+
+</body>
+</html>
