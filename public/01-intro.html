@@ -24,10 +24,10 @@ There are three ways to authenticate an API call, depending on where you are cal
 If you are building apps using the QuickSchools App Developer Console, then calls to the REST API methods are authenticated with the currently logged-in user using your app. You do not need an API key, and should not use one even if you have one. If your app mistakenly tries to access data that the user is not authenticated for, your API call will return with 401 Unauthorized.
 
 <b>Method 2: Making API calls from an external application</b>
-If you are calling the REST API from an external application, such as from your school web server, then you'll need to send the "apiKey" parameter with every API call. Be sure to keep the API key secure and never insert API keys in javascript.
+If you are calling the REST API from an external application, such as from your school web server, then you'll need an <a href="#api-keys">API key</a> to send as the "apiKey" parameter with every API call. Be sure to keep the API key secure and never insert API keys in javascript.
 
 <b>Method 3: Making API calls after OAuth authorization</b>
-The OAuth authorization flow will give you an access token. This can be used as the API key.
+The <a href="#oauth">OAuth authorization</a> flow will give you an access token. This can be used as the API key.
 </p>
 
 <h2 id="authorization-intro">Authorization</h2>
