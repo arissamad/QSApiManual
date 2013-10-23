@@ -164,6 +164,13 @@ body {
     font-family: "ProximaNovaRegular";
 }
 
+.content b {
+    font-family: "ProximaNovaSemibold";
+    font-weight: normal;
+    color: #0E2F51;
+    size: 1.1em;
+}
+
 .wrap {
 	width:100%;
 	float:left;

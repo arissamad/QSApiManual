@@ -1,0 +1,90 @@
+<html>
+<head>
+    <link href="reset.css" rel="stylesheet" type="text/css"></script>
+    <link href="manual.css" rel="stylesheet" type="text/css"></script>
+</head>
+<body>
+
+<div class="content">
+
+<h1 id="oauth">OAuth</h1>
+<p>Use the OAuth flow if you want your application to be able to make REST API calls to QuickSchools. This OAuth flow is most often needed by companies who have their own complementary product and want to integrate their product with QuickSchools. If you are trying to integrate your school website or other school-specific application to QuickSchools, then you should use API keys instead of the OAuth flow.</p>
+
+<p>The relevant endpoints for OAuth flow are:</p>
+<blockquote>
+    <ul>
+        <li>https://api.quickschools.com/sms/oauth/authorize.jsp</li>
+        <li>https://api.quickschools.com/sms/v1/token</li>
+    </ul>
+</blockquote>
+
+<h2 id="oauth-register">Registering your application in QuickSchools</h2>
+<p>By registering your application in QuickSchools, you can get the OAuth credentials required to initiate the OAuth flow.</p>
+
+<p>To begin, you will need a regular QuickSchools account. As the creator or admin of that QuickSchools account, you can then register your application to get OAuth credentials.</p>
+
+<h3>Step 1: Give yourself access to the OAuth page.</h3>
+<p>Go to the Settings menu on the top. Scroll down till you see the section titled "Interested in developing your own apps?"
+    
+Click Enable (or Configure if you have already enabled it in the past).
+
+Now give yourself access to the OAuth Credentials page.
+</p>
+
+<h3>Step 2: Navigate to the OAuth Credentials page.</h3>
+<p>You'll see a new menu appear titled "App Developer Console". Click on that, and if you are not yet at the OAuth page, click on the OAuth submenu.
+</p>
+
+<h3>Step 3: Register your application.</h3>
+<p>Click on the "Register Your Application" button and enter in the required details.
+    
+Once you've done that, your application will appear and you'll be able to show credentials to get your client ID and client secret.
+</p>
+
+<h2 id="auth-site">Authorization Site</h2>
+<p>In your application, provide your user a link to connect to QuickSchools. When the user clicks that link, direct the user to the following URL so the user can grant access to their QuickSchools account:</p>
+
+<blockquote>https://api.quickschools.com/sms/oauth/authorize.jsp</blockquote>
+
+<p>You need to pass in the following query parameters:</p>
+
+<ul>
+    <li><b>response_type</b> - This should be "code"</li>
+    <li><b>client_id</b> - This is the client ID you receive when you register an external application in your QuickSchools account.</li>
+</ul>
+
+<p>So for example, if your client_id is "111111111", you should direct the user to the following URL:</p>
+
+<blockquote>https://api.quickschools.com/sms/oauth/authorize.jsp?response_type=code&client_id=111111111</blockquote>
+
+<p>QuickSchools will ask the user to login, and then ask if the user wants to grant your application access to their data.</p>
+
+<p>If the user grants access, we then redirect the user's browser to the redirect URL you specified when registering the application. We will append the "code" query parameter to the URL.</p>
+
+<p>Your server can now use this code to exchange for an access token.</p>
+
+<h2 id="oauth-exchange">Exchanging authorization code for an access token</h2>
+<p>The final step in the OAuth flow is to exchange the authorization code retrieved from above for an access token.</p>
+
+<p>Make an HTTP POST call to the following URL:</p>
+
+<blockquote>https://api.quickschools.com/sms/v1/token?grant_type=authorization_code&client_id=111111111&client_secret=[client_secret here]&code=[authorization_code here]&redirect_uri=</blockquote>
+
+<small>Note: Please pass parameters as URL parameters and not as parameters in the POST data body.</small>
+
+<p>
+QuickSchools will then respond with the following json data:
+</p>
+
+<code>
+    {
+        access_token: [secret token here]
+    }
+</code>
+
+<p>And that's it! You can now use the access_token in place of an API Key with every API call.</p>
+
+</div>
+
+</body>
+</html>

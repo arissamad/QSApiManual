@@ -27,7 +27,7 @@
 <table class="data">
     <tr>
         <td>GET</td>
-        <td class="nowrap">/api/v1/schoolgroup</td>
+        <td class="nowrap">/sms/v1/schoolgroup</td>
         <td>Returns details of the current user's SchoolGroup.</td>
     </tr>
 </table>
@@ -45,14 +45,14 @@
 <table class="data">
     <tr>
         <td>GET</td>
-        <td class="nowrap">/api/v1/schools</td>
+        <td class="nowrap">/sms/v1/schools</td>
         <td>Returns the list of schools that belong to the current user's SchoolGroup.
         
 If the school is an individual school that's not part of a group, a single school will be returned in the list.</td>
     </tr>
     <tr>
         <td>GET</td>
-        <td class="nowrap">/api/v1/schools/{school-id}</td>
+        <td class="nowrap">/sms/v1/schools/{school-id}</td>
         <td>Returns the details of the specified school.</td>
     </tr>
 </table>
@@ -82,12 +82,12 @@ If the school is an individual school that's not part of a group, a single schoo
 <table class="data">
     <tr>
         <td>GET</td>
-        <td class="nowrap">/api/v1/semesters</td>
+        <td class="nowrap">/sms/v1/semesters</td>
         <td>Returns the list of semesters.</td>
     </tr>
     <tr>
         <td>GET</td>
-        <td class="nowrap">/api/v1/semesters/{semester-id}</td>
+        <td class="nowrap">/sms/v1/semesters/{semester-id}</td>
         <td>Returns the details of the specified semester.</td>
     </tr>
 </table>
@@ -119,12 +119,12 @@ If the school is an individual school that's not part of a group, a single schoo
 <table class="data">
     <tr>
         <td>GET</td>
-        <td class="nowrap">/api/v1/people</td>
+        <td class="nowrap">/sms/v1/people</td>
         <td>Returns the list of all people in the system. These include teachers, students, parents & guardians.</td>
     </tr>
     <tr>
         <td>GET</td>
-        <td class="nowrap">/api/v1/people/{person-id}</td>
+        <td class="nowrap">/sms/v1/people/{person-id}</td>
         <td>Returns the details of the specified person.</td>
     </tr>
 </table>
@@ -187,28 +187,102 @@ If the school is an individual school that's not part of a group, a single schoo
     <li>Parent records also include the relationship. There is a default list of relationships in the system, but users may add, change or delete them. For the default system relationships, the parentRelationshipMetaId is set by the system & is immutable. They are: father, mother, guardian.</li>
 </ul>
 
-<h2 id="subject-sets">SubjectSets</h2>
+<h2 id="teachers">Teachers</h2>
+
 
 <h3>Resource URIs</h3>
 <table class="data">
     <tr>
         <td>GET</td>
-        <td class="nowrap">/api/v1/subjectsets</td>
-        <td>Returns the list of all subject sets.</td>
+        <td class="nowrap">/sms/v1/teachers</td>
+        <td>Returns the list of all teachers.</td>
     </tr>
     <tr>
         <td>GET</td>
-        <td class="nowrap">/api/v1/subjectsets/{subjectset-id}</td>
-        <td>Returns the details of the specified subject set.</td>
+        <td class="nowrap">/sms/v1/teachers/{teacher-id}</td>
+        <td>Returns the details of the specified teacher.</td>
     </tr>
 </table>
 
-<h3>JSON result for a single subject set</h3>
+<h3>JSON result for a single teacher</h3>
 <code>
     {
-        subjectSetId: "3",
-        setCode: "ENG-01",
-        setName: "English 01"
+        id: "3",
+        fullName: "Ryan Harris"
+    }
+</code>
+
+<h2 id="students">Students</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/students</td>
+        <td>Returns the list of all students.</td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/students/{student-id}</td>
+        <td>Returns the details of the specified student.</td>
+    </tr>
+</table>
+
+<h3>JSON result for a single student</h3>
+<code>
+    {
+        id: "3",
+        fullName: "Ryan Harris"
+    }
+</code>
+
+
+<h2 id="parents">Parents</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/parents</td>
+        <td>Returns the list of all parents.</td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/parents/{parent-id}</td>
+        <td>Returns the details of the specified parent.</td>
+    </tr>
+</table>
+
+<h3>JSON result for a single parent</h3>
+<code>
+    {
+        id: "3",
+        fullName: "Ryan Harris"
+    }
+</code>
+
+<h2 id="sections">Sections</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/sections</td>
+        <td>Returns the list of all course section.</td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/sections/{section-id}</td>
+        <td>Returns the details of the specified course section.</td>
+    </tr>
+</table>
+
+<h3>JSON result for a single subject section</h3>
+<code>
+    {
+        sectionId: "3",
+        sectionCode: "ENG-01",
+        sectionName: "English 01"
         classId: "12993",
         className: "5th Grade"
     }
@@ -219,26 +293,26 @@ If the school is an individual school that's not part of a group, a single schoo
     <li>Class refers to the grade level, such as 5th grade. Users can create custom grade levels.</li>
 </ul>
 
-<h2 id="set-enrollments">SetEnrollments</h2>
+<h2 id="section-enrollments">SectionEnrollments</h2>
 
 <h3>Resource URIs</h3>
 <table class="data">
     <tr>
         <td>GET</td>
-        <td class="nowrap">/api/v1/setenrollments</td>
+        <td class="nowrap">/sms/v1/sectionenrollments</td>
         <td>Returns the list of all people enrolled. This includes teachers as well as students.</td>
     </tr>
     <tr>
         <td>GET</td>
-        <td class="nowrap">/api/v1/setenrollments/{subjectset-id}</td>
+        <td class="nowrap">/sms/v1/sectionenrollments/{section-id}</td>
         <td>Returns the enrollments for a specific subject set.</td>
     </tr>
 </table>
 
-<h3>JSON result for the enrollments of a single subject set:</h3>
+<h3>JSON result for the enrollments of a single subject section:</h3>
 <code>
     {
-        subjectSetId: "3",
+        sectionId: "3",
         enrollments: [
             {
                 personId: "3",
@@ -252,34 +326,34 @@ If the school is an individual school that's not part of a group, a single schoo
     }
 </code>
 
-<h2 id="homework">Homework</h2>
+<h2 id="assignment">Assignments</h2>
 
 <h3>Resource URIs</h3>
 <table class="data">
     <tr>
         <td>GET</td>
-        <td class="nowrap">/api/v1/homework</td>
-        <td>Returns the list of all homework assigned.</td>
+        <td class="nowrap">/sms/v1/assignments</td>
+        <td>Returns the list of all assignments.</td>
     </tr>
     <tr>
         <td>GET</td>
-        <td class="nowrap">/api/v1/homework/{homework-id}</td>
-        <td>Returns the details of a single homework assignment.</td>
+        <td class="nowrap">/sms/v1/assignments/{assignment-id}</td>
+        <td>Returns the details of a single assignment.</td>
     </tr>
     <tr>
         <td>POST</td>
-        <td class="nowrap">/api/v1/homework</td>
-        <td>Creates a homework assignment for a specified subject set.</td>
+        <td class="nowrap">/sms/v1/assignments</td>
+        <td>Creates an assignment for the specified subject set.</td>
     </tr>
     <tr>
         <td>PUT</td>
-        <td class="nowrap">/api/v1/homework/${homework-id}</td>
-        <td>Updates an existing homework assignment.</td>
+        <td class="nowrap">/sms/v1/assignments/${assignment-id}</td>
+        <td>Updates an existing assignment.</td>
     </tr>
     <tr>
         <td>DELETE</td>
-        <td class="nowrap">/api/v1/homework/${homework-id}</td>
-        <td>Deletes an existing homework assignment.</td>
+        <td class="nowrap">/sms/v1/assignments/${assignment-id}</td>
+        <td>Deletes an existing assignment.</td>
     </tr>
 </table>
 
@@ -289,12 +363,12 @@ If the school is an individual school that's not part of a group, a single schoo
 <table class="data">
     <tr>
         <td>GET</td>
-        <td class="nowrap">/api/v1/grades</td>
+        <td class="nowrap">/sms/v1/grades</td>
         <td>Returns the list of students and the grades achieved for the specified assignment.</td>
     </tr>
     <tr>
         <td>PUT</td>
-        <td class="nowrap">/api/v1/grades</td>
+        <td class="nowrap">/sms/v1/grades</td>
         <td>Updates the grades achieved by students for the specified assignment.</td>
     </tr>
 </table>
