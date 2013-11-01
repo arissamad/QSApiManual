@@ -12,16 +12,23 @@
         <li>SchoolGroups</li>
         <li>Schools</li>
         <li>Semesters</li>
-        <li>Users</li>
-        <li>SubjectSets</li>
-        <li>SubjectSetEnrollment</li>
+        <li>Classes</li>
+        <li>Homerooms</li>
+        <li>Teachers</li>
+        <li>Students</li>
+        <li>Parents</li>
+        <li>Sections</li>
+        <li>SectionEnrollments</li>
         <li>Assignments</li>
         <li>Grades</li>
     </ul>
 </blockquote>
 
 <h2 id="groups">SchoolGroups</h2>
-<p>In QuickSchools, groups of schools are organized as SchoolGroups. For example, a district would be set up as a SchoolGroup.</p>
+<p>In QuickSchools, groups of schools are organized as SchoolGroups. For example, a district would be set up as a SchoolGroup.
+    
+Individual schools don't have to belong to a SchoolGroup.
+</p>
 
 <h3>Resouce URIs</h3>
 <table class="data">
@@ -32,10 +39,24 @@
     </tr>
 </table>
 
-<h3>JSON result</h3>
+<h3>JSON result if the school associated with the current user or apiKey belongs to a school group:</h3>
 <code>
     {
-        schoolGroupId: "3""
+        isPartOfSchoolGroup: true,
+        schoolGroupId: "6",
+        name: "The Wildflower Group Of Schools",
+        billingSchoolId: "3"
+    }
+</code>
+<p>Notes:</p>
+<ul>
+    <li>billingSchoolId: This is a school in the group that processes the bills for all the schools in the group.</li>
+</ul>
+
+<h3>JSON result if the current user of apiKey belongs to an individual school which is not part of a school group:</h3>
+<code>
+    {
+        isPartOfSchoolGroup: false
     }
 </code>
 
@@ -52,22 +73,22 @@ If the school is an individual school that's not part of a group, a single schoo
     </tr>
     <tr>
         <td>GET</td>
-        <td class="nowrap">/sms/v1/schools/{school-id}</td>
-        <td>Returns the details of the specified school.</td>
+        <td class="nowrap">/sms/v1/school</td>
+        <td>Returns the details of the school associated with the currently-authenticated user or apiKey.</td>
     </tr>
 </table>
 
-<h3>JSON result for a single school</h3>
+<h3>JSON result:</h3>
 <code>
     {
-        smsSchoolId: "3",
+        id: "3",
         schoolCode: "applecreek",
         schoolName: "Apple Creek School",
-        contactPerson: "John Smith",
+        principalName: "John Smith",
         address: "5 Palm Court, Sunnyvale, CA 94086",
         email: "info@applecreekschool.edu",
         website: "http://www.applecreekschool.edu",
-        schoolPhone: "(111) 444 4444"
+        phone: "(111) 444 4444"
     }
 </code>
 
@@ -95,7 +116,7 @@ If the school is an individual school that's not part of a group, a single schoo
 <h3>JSON result for a single semester</h3>
 <code>
     {
-        semesterId: "3",
+        id: "3",
         semesterName: "1st Quarter",
         yearId: "3",
         yearName: "2013/2014",
@@ -109,86 +130,79 @@ If the school is an individual school that's not part of a group, a single schoo
 
 <ul>
     <li>There is always a semester which is the current active semester. This will have isActive = true.</li>
-    <li>Multiple semesters can belong under a year. Semesters with the same parent year will simply return the same year details.</li>
+    <li>A year can have multiple semesters.</li>
 </ul>
 
-
-<h2 id="users">People</h2>
+<h2 id="classes">Classes</h2>
+<p>A class is a year level, like 1st Grade or 2nd Grade.</p>
 
 <h3>Resource URIs</h3>
 <table class="data">
     <tr>
         <td>GET</td>
-        <td class="nowrap">/sms/v1/people</td>
-        <td>Returns the list of all people in the system. These include teachers, students, parents & guardians.</td>
+        <td class="nowrap">/sms/v1/classes</td>
+        <td>Returns the list of classes (year levels like 1st Grade).</td>
     </tr>
     <tr>
         <td>GET</td>
-        <td class="nowrap">/sms/v1/people/{person-id}</td>
-        <td>Returns the details of the specified person.</td>
+        <td class="nowrap">/sms/v1/classes/{class-id}</td>
+        <td>Returns the details of the specified class.</td>
     </tr>
 </table>
 
-<h3>JSON result for a single student</h3>
+<h3>JSON result for a single class:</h3>
 <code>
     {
-        personId: "s-3",
-        type: "student",
-        fullName: "John Smith",
-        gender: "male",
-        username: "",
-        email: "john@applecreekschool.edu",
-        thumbnailUrl: "http://someurl"
+        id: "3",
+        sortOrder: 5,
+        name: "1st Grade",
+        abbreviation: "G01"
     }
 </code>
 
 <p>Notes:</p>
+
 <ul>
-    <li>Type can be "student", "teacher" or "parent".</li>
-    <li>username may be blank. Not all people records are users who log in. For example, a parent record may be added without login access.</li>
+    <li>Classes are typically sorted by a field called "sortOrder", and not alphabetically. This, for example, allows Kindergarten to be listed before 1st Grade.</li>
 </ul>
 
-<h3>JSON result for a single teacher</h3>
+<h2 id="homerooms">Homerooms</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/homerooms</td>
+        <td>Returns the list of homerooms.</td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/homerooms/{homeroom-id}</td>
+        <td>Returns the details of the specified homeroom.</td>
+    </tr>
+</table>
+
+<h3>JSON result for a single homeroom:</h3>
 <code>
     {
-        personId: "t-3",
-        type: "teacher",
-        fullName: "Anne Smith",
-        gender: "female",
-        username: "anne@applecreekschool.edu",
-        email: "john@applecreekschool.edu",
-        thumbnailUrl: "http://someurl",
-        isSchoolAdmin: true
+        id: "3",
+        classId: "5",
+        name: "Mary Smith",
+        abbreviation: "Mary Smith-G01"
+        homeroomTeacherName: "Mary Smith",
+        homeroomTeacherId: "29"
     }
 </code>
 
 <p>Notes:</p>
-<ul>
-    <li>Teacher records also include the "isSchoolAdmin" field. If true, this user has full administrative rights in the system.</li>
-</ul>
 
-<h3>JSON result for a single parent</h3>
-<code>
-    {
-        personId: "p-3",
-        type: "parent",
-        fullName: "Maya Karin",
-        gender: "female",
-        username: "",
-        email: "mayakarin@mailinator.com",
-        thumbnailUrl: "http://someurl",
-        parentRelationshipName: "Mother"
-        parentRelationshipMetaId: "mother"
-    }
-</code>
-
-<p>Notes:</p>
 <ul>
-    <li>Parent records also include the relationship. There is a default list of relationships in the system, but users may add, change or delete them. For the default system relationships, the parentRelationshipMetaId is set by the system & is immutable. They are: father, mother, guardian.</li>
+    <li>A class (i.e. year-level like 1st Grade) can have several homerooms. Thus, each homeroom record has a reference to the parent classId.</li>
+    <li>Every homeroom has a homeroom teacher.</li>
+    <li>For smaller schools, the name of the homeroom matches the name of the homeroom teacher. But for larger schools, homerooms might be named differently from the teacher in charge.</li>
 </ul>
 
 <h2 id="teachers">Teachers</h2>
-
 
 <h3>Resource URIs</h3>
 <table class="data">
@@ -208,7 +222,9 @@ If the school is an individual school that's not part of a group, a single schoo
 <code>
     {
         id: "3",
-        fullName: "Ryan Harris"
+        fullName: "Ryan Harris",
+        title: "Head of English Department",
+        gender: "Male"
     }
 </code>
 
@@ -224,7 +240,12 @@ If the school is an individual school that's not part of a group, a single schoo
     <tr>
         <td>GET</td>
         <td class="nowrap">/sms/v1/students/{student-id}</td>
-        <td>Returns the details of the specified student.</td>
+        <td>Returns the details of the specified student. Supports these additional parameters:
+        
+    showDeleted=true: Includes deleted students.
+    showHasLeft=true: Includes students who have graduated.
+    classId=12345: Filters for students in the specified class (grade level).
+        </td>
     </tr>
 </table>
 
@@ -232,10 +253,20 @@ If the school is an individual school that's not part of a group, a single schoo
 <code>
     {
         id: "3",
-        fullName: "Ryan Harris"
+        fullName: "Ryan Harris",
+        preferredName: "Ryan",
+        classId: "234",
+        classCode: "G02",
+        className: "2nd Grade",
+        gender: "Male"
     }
 </code>
 
+<p>Notes:</p>
+
+<ul>
+    <li><b>Parents:</b> You can get the list of parents for each student. Add "fields=parents" in the query.</li>
+</ul>
 
 <h2 id="parents">Parents</h2>
 
@@ -261,6 +292,13 @@ If the school is an individual school that's not part of a group, a single schoo
     }
 </code>
 
+<p>Notes:</p>
+
+<ul>
+    <li><b>Children:</b> You can get the list of children (students) for each parent. Add "fields=students" in the query.</li>
+</ul>
+
+
 <h2 id="sections">Sections</h2>
 
 <h3>Resource URIs</h3>
@@ -268,7 +306,10 @@ If the school is an individual school that's not part of a group, a single schoo
     <tr>
         <td>GET</td>
         <td class="nowrap">/sms/v1/sections</td>
-        <td>Returns the list of all course section.</td>
+        <td>Returns the list of all course sections for the current active semester. Supports these additional parameters:
+            
+semesterId=12345: Returns the list of course sections for the specified semester.
+        </td>
     </tr>
     <tr>
         <td>GET</td>
@@ -277,20 +318,22 @@ If the school is an individual school that's not part of a group, a single schoo
     </tr>
 </table>
 
-<h3>JSON result for a single subject section</h3>
+<h3>JSON result for a single subject section:</h3>
 <code>
     {
-        sectionId: "3",
+        id: "3",
         sectionCode: "ENG-01",
         sectionName: "English 01"
         classId: "12993",
-        className: "5th Grade"
+        className: "5th Grade",
+        teachers: [{id: "6", fullName: "Maria Alexander"}]
     }
 </code>
 
 <p>Notes</p>
 <ul>
     <li>Class refers to the grade level, such as 5th grade. Users can create custom grade levels.</li>
+    <li>A section has at least one teacher, possibly more.</li>
 </ul>
 
 <h2 id="section-enrollments">SectionEnrollments</h2>
@@ -300,27 +343,27 @@ If the school is an individual school that's not part of a group, a single schoo
     <tr>
         <td>GET</td>
         <td class="nowrap">/sms/v1/sectionenrollments</td>
-        <td>Returns the list of all people enrolled. This includes teachers as well as students.</td>
+        <td>Returns the list of all students currently enrolled in all sections.</td>
     </tr>
     <tr>
         <td>GET</td>
         <td class="nowrap">/sms/v1/sectionenrollments/{section-id}</td>
-        <td>Returns the enrollments for a specific subject set.</td>
+        <td>Returns the enrollments for a specific course section.</td>
     </tr>
 </table>
 
-<h3>JSON result for the enrollments of a single subject section:</h3>
+<h3>JSON result for the enrollments of a single course section:</h3>
 <code>
     {
-        sectionId: "3",
-        enrollments: [
+        id: "3",
+        students: [
             {
-                personId: "3",
-                type: "teacher"
+                id: "3",
+                fullName: "Jessica Lane"
             },
             {
-                personId: "2",
-                type: "student"
+                id: "8",
+                fullName: "Ryan Alexander"
             }
         ]
     }
