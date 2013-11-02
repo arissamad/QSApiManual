@@ -216,6 +216,44 @@ If the school is an individual school that's not part of a group, a single schoo
         <td class="nowrap">/sms/v1/teachers/{teacher-id}</td>
         <td>Returns the details of the specified teacher.</td>
     </tr>
+    <tr>
+        <td>POST</td>
+        <td class="nowrap">/sms/v1/teachers</td>
+        <td>Adds or updates a teacher record. Example:
+
+<code>
+curl https://api.quickschools.com/sms/v1/teachers?apiKey=[YOUR API KEY] --data "teacherName=Mike Summers&preferredName=Mr. Summers"
+</code>
+It returns the json object for the teacher that was created. An additional boolean field, "isExistingRecord", is also returned.
+
+The only required field is teacherName. All other fields are optional. The supported fields are:
+<div class="toggle-section">
+<b>teacherName</b> - If the teacher name matches an existing record, the existing record will be updated. Otherwise, a new record will be created.
+<b>preferredName</b>
+<b>employeeNumber</b>
+<b>familyName</b>
+<b>teacherInitials</b>
+<b>title</b>
+<b>birthDate</b>
+<b>gender</b> - This can be either "male" or "female".
+<b>nationality</b>
+<b>maritalStatus</b>
+<b>employmentDate</b>
+<b>spouseName</b>
+<b>socialSecurity</b>
+<b>addressLine1</b>
+<b>addressLine2</b>
+<b>zip</b>
+<b>city</b>
+<b>state</b>
+<b>email</b>
+<b>phone</b>
+<b>cellPhone</b>
+<b>degree</b>
+<b>certification</b>
+<b>experience</b>
+        </td>
+    </tr>
 </table>
 
 <h3>JSON result for a single teacher</h3>
@@ -247,9 +285,66 @@ If the school is an individual school that's not part of a group, a single schoo
     classId=12345: Filters for students in the specified class (grade level).
         </td>
     </tr>
+    <tr>
+        <td>POST</td>
+        <td class="nowrap">/sms/v1/students</td>
+        <td>Adds or updates a student record. Example:
+
+<code>
+curl https://api.quickschools.com/sms/v1/students?apiKey=[YOUR API KEY] --data "fullName=Mary Smith&grade=1st Grade"
+</code>
+It returns the json object for the student that was created. An additional boolean field, "isExistingRecord", is also returned.
+
+The only required field is fullName. All other fields are optional. The supported fields are:
+<div class="toggle-section">
+<b>fullName</b> - If the full name matches an existing record, the existing record will be updated. Otherwise, a new record will be created.
+<b>studentId</b> - Pass this in if you have your own unique ID for the student.            
+<b>preferredName</b> - This is the student's preferred name.
+<b>grade</b> - This is the student's grade level, i.e. "1st Grade". It should match the class level names in QuickSchools exactly.
+<b>homeroomTeacherFullName</b> - This should match the teacher's full name exactly.
+<b>homeroomName</b> - Only used if your school uses custom homeroom names.
+<b>birthDate</b>
+<b>gender</b> - Can be either "male" or "female".
+<b>zip</b>
+<b>city</b>
+<b>state</b>
+<b>country</b>
+<b>fullAddress</b> - The student's full address in a single field, or just address line 1 and 2 if desired.
+<b>phone</b>
+<b>cellPhone</b>
+<b>email</b>
+<b>fax</b>
+<b>medicalProblems</b>
+<b>medicalNeeds</b>
+<b>medicationAllergies</b>
+<b>foodAllergies</b>
+<b>otherAllergies</b>
+<b>dietaryNeeds</b>
+<b>otherMedicalInformation</b>
+
+You can specify up to 2 parents. Just change the index of the field, i.e. parent2Name.
+
+<b>parent1Name</b>
+<b>parent1Relationship</b>
+<b>parent1AddressLine1</b>
+<b>parent1AddressLine2</b>
+<b>parent1City</b>
+<b>parent1State</b>
+<b>parent1Zip</b>
+<b>parent1Country</b>
+<b>parent1District</b>
+<b>parent1Email</b>
+<b>parent1HomePhone</b>
+<b>parent1CellPhone</b>
+<b>parent1BusinessPhone</b>
+<b>parent1Occupation</b>
+<b>parent1OtherInfo</b>
+</div>
+        </td>
+    </tr>
 </table>
 
-<h3>JSON result for a single student</h3>
+<h3>JSON result for a single student:</h3>
 <code>
     {
         id: "3",

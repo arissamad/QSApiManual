@@ -41,7 +41,9 @@ function loadedPage() {
                 renderChapter(toc1,tocParent,contentDiv,chapterData[i],i);
                 
 				if(numLoaded == chapters.length) {
+				    doneLoading();
 					    $(window).on("scroll", function() {
+					        
         //console.log("Scroll", this,arguments);
         //chapter buckets
         $("section div.content").each(function(index,chapter) {
@@ -385,4 +387,19 @@ function isElementVisible(elem, bufferHeight){
     var elemTop = $(elem).offset().top;
     var elemBottom = elemTop + $(elem).height();
     return elemBottom+bufferHeight > docViewTop && docViewBottom > elemTop-bufferHeight;
+}
+
+// Put any code here to process stuff after chapters are loaded.
+function doneLoading() {
+    var toggleSections = $(".toggle-section");
+    
+    var linkJq = $("<span class='toggle-link'>Show details</span>");
+    
+    linkJq.click(function() {
+       var linkJq = $(this);
+       linkJq.next().show();
+       linkJq.remove();
+    });
+    
+    toggleSections.before(linkJq);
 }
