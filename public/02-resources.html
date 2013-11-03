@@ -219,15 +219,15 @@ If the school is an individual school that's not part of a group, a single schoo
     <tr>
         <td>POST</td>
         <td class="nowrap">/sms/v1/teachers</td>
-        <td>Adds or updates a teacher record. Example:
+        <td>Adds or updates a teacher record. <div class="toggle-section">
+Example:
 
-<code>
-curl https://api.quickschools.com/sms/v1/teachers?apiKey=[YOUR API KEY] --data "teacherName=Mike Summers&preferredName=Mr. Summers"
+<code>curl https://api.quickschools.com/sms/v1/teachers?apiKey=[YOUR API KEY] --data "teacherName=Mike Summers&preferredName=Mr. Summers"
 </code>
 It returns the json object for the teacher that was created. An additional boolean field, "isExistingRecord", is also returned.
 
 The only required field is teacherName. All other fields are optional. The supported fields are:
-<div class="toggle-section">
+
 <b>teacherName</b> - If the teacher name matches an existing record, the existing record will be updated. Otherwise, a new record will be created.
 <b>preferredName</b>
 <b>employeeNumber</b>
@@ -288,15 +288,14 @@ The only required field is teacherName. All other fields are optional. The suppo
     <tr>
         <td>POST</td>
         <td class="nowrap">/sms/v1/students</td>
-        <td>Adds or updates a student record. Example:
-
-<code>
-curl https://api.quickschools.com/sms/v1/students?apiKey=[YOUR API KEY] --data "fullName=Mary Smith&grade=1st Grade"
+        <td>Adds or updates a student record. <div class="toggle-section">
+Example:
+<code>curl https://api.quickschools.com/sms/v1/students?apiKey=[YOUR API KEY] --data "fullName=Mary Smith&grade=1st Grade"
 </code>
 It returns the json object for the student that was created. An additional boolean field, "isExistingRecord", is also returned.
 
 The only required field is fullName. All other fields are optional. The supported fields are:
-<div class="toggle-section">
+
 <b>fullName</b> - If the full name matches an existing record, the existing record will be updated. Otherwise, a new record will be created.
 <b>studentId</b> - Pass this in if you have your own unique ID for the student.            
 <b>preferredName</b> - This is the student's preferred name.
@@ -466,12 +465,14 @@ semesterId=12345: Returns the list of course sections for the specified semester
 
 <h2 id="assignment">Assignments</h2>
 
+<p>Assignments refer to the columns in the gradebook.</p>
+
 <h3>Resource URIs</h3>
 <table class="data">
     <tr>
         <td>GET</td>
-        <td class="nowrap">/sms/v1/assignments</td>
-        <td>Returns the list of all assignments.</td>
+        <td class="nowrap">/sms/v1/sections/{section-id}/assignments</td>
+        <td>Returns the list of all assignments in the specified course section.</td>
     </tr>
     <tr>
         <td>GET</td>
@@ -480,20 +481,39 @@ semesterId=12345: Returns the list of course sections for the specified semester
     </tr>
     <tr>
         <td>POST</td>
-        <td class="nowrap">/sms/v1/assignments</td>
-        <td>Creates an assignment for the specified subject set.</td>
+        <td class="nowrap">/sms/v1/sections/{section-id}/assignments</td>
+        <td>Creates an assignment for the specified subject set.  <div class="toggle-section">
+Supports these parameters:
+<b>name</b>
+<b>date</b>
+<b>totalMarksPossible</b>
+<b>columnCategoryId</b> - If not given, the default category (usually "Assignment") will be used.
+</div></td>
     </tr>
     <tr>
-        <td>PUT</td>
-        <td class="nowrap">/sms/v1/assignments/${assignment-id}</td>
-        <td>Updates an existing assignment.</td>
+        <td>POST</td>
+        <td class="nowrap">/sms/v1/assignments/{assignment-id}</td>
+        <td>Updates an existing assignment. See creation of an assignment above for the supported parameters.</td>
     </tr>
     <tr>
         <td>DELETE</td>
-        <td class="nowrap">/sms/v1/assignments/${assignment-id}</td>
+        <td class="nowrap">/sms/v1/sections/{section-id}/assignments/{assignment-id}</td>
         <td>Deletes an existing assignment.</td>
     </tr>
 </table>
+
+
+<h3>JSON result for a single assignment:</h3>
+<code>
+    {
+        id: "3432",
+        name: "HW #1",
+        date: "2013-10-01",
+        totalMarksPossible: 100,
+        categoryId: "23",
+        categoryName: "Assignment"
+    }
+</code>
 
 <h2 id="grades">Grades</h2>
 
@@ -502,12 +522,33 @@ semesterId=12345: Returns the list of course sections for the specified semester
     <tr>
         <td>GET</td>
         <td class="nowrap">/sms/v1/grades</td>
-        <td>Returns the list of students and the grades achieved for the specified assignment.</td>
+        <td>Returns the list of students and the grades achieved for the specified assignment. <div class="toggle-section">
+Requires the following parameters:
+
+<b>sectionId</b>
+<b>assignmentId</b>
+</div></td>
     </tr>
     <tr>
-        <td>PUT</td>
+        <td>POST</td>
         <td class="nowrap">/sms/v1/grades</td>
-        <td>Updates the grades achieved by students for the specified assignment.</td>
+        <td>Updates the grades achieved by students for the specified assignment. <div class="toggle-section">
+Requires the following parameters:
+
+<b>sectionId</b>
+<b>assignmentId</b>
+<b>grades</b> - This should be formatted as a json string. Essentially, you'll be passing a list of students, and the marks for each student. Example:
+
+<code>[{
+    studentId: "3421",
+    marks: 83.5
+}, {
+    studentId, "3288",
+    marks: 63
+}]
+</code>
+
+</div></td>
     </tr>
 </table>
 

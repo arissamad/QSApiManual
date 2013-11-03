@@ -868,7 +868,7 @@ code {
 
 table.data code {
     font-size: 0.8em;
-    white-space: normal;
+    white-space: pre-wrap;
     margin-bottom: 0px;
     padding-top: 15px;
     padding-left: 5px;
