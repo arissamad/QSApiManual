@@ -9,6 +9,8 @@
 
 <h1 id="intro">REST API Overview</h1>
 <p>The QuickSchools REST API allows you to query data from QuickSchools. You can also use it to make changes to your QuickSchools data.
+
+JSON is returned in all API calls, including errors.
 </p>
 
 <h2 id="api-endpoint">API Endpoint</h2>
@@ -34,6 +36,67 @@ The <a href="#oauth">OAuth authorization</a> flow will give you an access token.
 <p>Each logged-in user is only able to access data for which the user is authorized for. For example, a parent cannot access the grades of a student for which he is not responsible for, and a student can't change her own grade. Apps calling the REST API from within QuickSchools will be subject to these restrictions, depending on the logged-in user. These restrictions are noted for each API method.</p>
 
 <p>Calls using API keys, however, have no such restrictions. They are able to access and change any data. You should keep API keys  securely for this reason. For example, they should never be used in javascript or shared with students.</p>
+
+<h2 id="api-return">API Call Return Object</h2>
+<p>All API Calls return a JSON object (and never a JSON array).
+
+The JSON object returned will always have a "success" field, which will be set to either true or false. For brevity, the "success" field is not included in the JSON return examples after this section.
+
+Depending on the API method, there are 3 possible types of JSON objects returned. A method will always consistently return one of the following types. You cannot change the return type.</p>
+
+<h3>Return type 1: A single object:</h3>
+<code>
+    {
+        success: true,
+        id: 12321
+        // Other fields follow, depending on the object being returned.
+    }
+</code>
+
+<h3>Return type 2: A flat list, i.e. a list that is not paged:</h3>
+<code>
+    {
+        success: true,
+        list: [{ ... }, { ... }]
+    }
+</code>
+
+<h3>Return type 3: A paged list:</h3>
+<code>
+    {
+        success: true,
+        numberOfItems: 274, // This is the total number of items, including excluded items
+        page: 0,            // The current page being viewed
+        numberOfPages: 3,    // Total number of pages available
+        itemsPerPage: 100,   // The number of items returned per page
+        list: [{ ... }, { ... }]
+    }
+</code>
+<p>When the API method returns a paged list, you can issue the API call with specific parameters to control the data that is returned.
+<ul>
+    <li><b>page</b> - The page number to retrieve, starting from page 0.</li>
+    <li><b>itemsPerPage</b> - If you would like to override the default of 10 items returned per page, set this parameter. A maximum of 1000 is currently supported.</li>
+</ul>
+
+Here's an example where you retrieve 50 items per page, and you want to retrieve the items starting from the 2nd page:
+</p>
+<code>
+    curl "https://api.quickschools.com/sms/v1/sections/[SECTION ID]/assignments?apiKey=[YOUR API KEY]&itemsPerPage=50&page=1"
+</code>
+
+<p>Remember, for methods that return a list of items, some methods will return a flat list, and others will return a paged list. You cannot control the return type.</p>
+    
+<h2 id="api-errors">Errors</h2>
+<p>In the event of an error, we will respond with an HTTP Status Code. The JSON body will contain more detailed information about the error.
+<ul>
+    <li><b>200 OK</b> - The API call returned successfully.</li>
+    <li><b>400 Bad Request</b> - Parameters were not correctly sent to the API call.</li>
+    <li><b>401 Unauthorized</b> - The API key is not valid, or is not valid for the requested resource.</li>
+    <li><b>404 Not Found</b> - A specified item was not found in the database.</li>
+    <li><b>5xx Server Errors</b> - An error occured on our servers.</li>
+</ul>
+    
+</p>
 
 </div>
 
