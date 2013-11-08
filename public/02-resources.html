@@ -547,10 +547,70 @@ Requires the following parameters:
     marks: 63
 }]
 </code>
-
 </div></td>
     </tr>
 </table>
+
+<h2 id="attendance">Attendance</h2>
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/students/{student-id}/attendance</td>
+        <td>Returns a paged list of dates for which attendance was taken for the specified student. <div class="toggle-section">
+The list of dates is sorted by the most recent date first. Example:
+        <code>[
+    {
+        date: "2013-11-04",
+        status: "P"
+    },
+    {
+        date: "2013-11-02"
+        status: "A"
+    }
+]</code>
+
+Attendance status can be one of:
+
+    P: Present
+    A: Absent
+    T: Tardy
+    EA: Excused Absense
+    ET: Excused Tardy
+
+Optional parameters you can pass in:
+
+<b>beginDate</b>
+<b>endDate</b>
+        
+        </div></td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/students/{student-id}/attendance/{date}</td>
+        <td>Returns a single item, which is the student's attendance for the specified date. If none is found, the "success" attribute will be set to false.
+        </td>
+    </tr>
+    <tr>
+        <td>POST</td>
+        <td class="nowrap">/sms/v1/students/{student-id}/attendance/{date}</td>
+        <td>Sets the attendance for a particular date. <div class="toggle-section">
+You can pass in the following parameters:
+
+<b>status</b> - An attendance status like "P".
+<b>teacherId</b> - The teacher that is a homeroom teacher of the student.
+<b>description</b> - [optional] Information about the attendance taken. For example, it may specify the homeroom name.
+        </div></td>
+    </tr>
+</table>
+
+<h3>JSON result for a single attendance record:</h3>
+<code>
+    {
+        date: "2013-11-01",
+        status: "P"
+    }
+</code>
 
 </div>
 
