@@ -356,11 +356,10 @@ You can specify up to 2 parents. Just change the index of the field, i.e. parent
     }
 </code>
 
-<p>Notes:</p>
-
-<ul>
-    <li><b>Parents:</b> You can get the list of parents for each student. Add "fields=parents" in the query.</li>
-</ul>
+<p>You can request additional fields by passing in the fields parameter with a comma-separated list. For example: "fields=enrollmentDate,hasLeft".
+    
+Here is a list of supported fields, which are self-explanatory: studentNumber, enrollmentDate, parents, siblings, homeroomId, multiLineResidentialAddress, country, zip, state, city, phone, cellPhone, fax, email, nationality, confidentialInformation, deleted, hasLeft, isExpelled.
+</p>
 
 <h2 id="parents">Parents</h2>
 
