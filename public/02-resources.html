@@ -273,7 +273,19 @@ The only required field is teacherName. All other fields are optional. The suppo
     <tr>
         <td>GET</td>
         <td class="nowrap">/sms/v1/students</td>
-        <td>Returns the list of all students.</td>
+        <td>Returns the list of all students. <div class="toggle-section">
+<b>Searching</b>
+You can search by passing in the "search" parameter. For example: "search=Alvin".
+
+This will search for a match in the following fields: Student's full name, student number, and class name.
+    
+<b>Filtering</b>
+You can also filter the list of students by passing in one of the following filtering parameters.
+
+homeroomId
+classId
+parentId
+    </div></td>
     </tr>
     <tr>
         <td>GET</td>
@@ -356,9 +368,11 @@ You can specify up to 2 parents. Just change the index of the field, i.e. parent
     }
 </code>
 
-<p>You can request additional fields by passing in the fields parameter with a comma-separated list. For example: "fields=enrollmentDate,hasLeft".
+<h3>Additional Fields</h3>
+
+<p>You can request additional fields by passing in the "fields" parameter with a comma-separated list. For example: "fields=enrollmentDate,hasLeft".
     
-Here is a list of supported fields, which are self-explanatory: studentNumber, enrollmentDate, parents, siblings, homeroomId, multiLineResidentialAddress, country, zip, state, city, phone, cellPhone, fax, email, nationality, confidentialInformation, deleted, hasLeft, isExpelled.
+Here is a list of supported fields, which are self-explanatory: studentNumber, enrollmentDate, parents, siblings, homeroomId, homeroomTeacher, multiLineResidentialAddress, country, zip, state, city, phone, cellPhone, fax, email, nationality, confidentialInformation, deleted, hasLeft, isExpelled.
 </p>
 
 <h2 id="parents">Parents</h2>
