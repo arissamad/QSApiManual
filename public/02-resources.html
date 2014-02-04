@@ -372,7 +372,7 @@ You can specify up to 2 parents. Just change the index of the field, i.e. parent
 
 <p>You can request additional fields by passing in the "fields" parameter with a comma-separated list. For example: "fields=enrollmentDate,hasLeft".
     
-Here is a list of supported fields, which are self-explanatory: studentNumber, enrollmentDate, parents, siblings, homeroomId, homeroomTeacher, multiLineResidentialAddress, country, zip, state, city, phone, cellPhone, fax, email, nationality, confidentialInformation, deleted, hasLeft, isExpelled.
+Here is a list of supported fields, which are self-explanatory: studentNumber, enrollmentDate, parents, siblings, homeroomId, homeroomTeacher, multiLineResidentialAddress, country, zip, state, city, phone, cellPhone, fax, email, nationality, confidentialInformation, deleted, hasLeft, isExpelled, customFields.
 </p>
 
 <h2 id="parents">Parents</h2>
@@ -583,7 +583,8 @@ The list of dates is sorted by the most recent date first. Example:
     },
     {
         date: "2013-11-02"
-        status: "A"
+        status: "A",
+        remarks: "Absent Medical"
     }
 ]</code>
 
@@ -594,6 +595,24 @@ Attendance status can be one of:
     T: Tardy
     EA: Excused Absense
     ET: Excused Tardy
+
+Remarks will be returned if any was set by the teacher.
+
+If you are taking period-based or subject-based attendance, then an additional "periods" parameter will be returned, which is a list of the attendance status for every period that attendance was taken. For example:
+        <code>[
+    {
+        date: "2013-11-04",
+        status: "P"
+        periods: [{
+            periodIndex: 0,
+            status: "P"
+        }, {
+            periodIndex: 1,
+            status: "A",
+            remarks: "Had the flu"
+        }]
+    }
+]</code>
 
 Optional parameters you can pass in:
 
