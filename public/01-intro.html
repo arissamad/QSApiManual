@@ -42,7 +42,7 @@ The <a href="#oauth">OAuth authorization</a> flow will give you an access token.
 
 The JSON object returned will always have a "success" field, which will be set to either true or false. For brevity, the "success" field is not included in the JSON return examples after this section.
 
-Depending on the API method, there are 3 possible types of JSON objects returned. A method will always consistently return one of the following types. You cannot change the return type.</p>
+Depending on the API method, there are 3 possible types of types of JSON objects returned. A method will always consistently return one of the following types. You cannot change the return type.</p>
 
 <h3>Return type 1: A single object:</h3>
 <code>
@@ -55,10 +55,10 @@ Depending on the API method, there are 3 possible types of JSON objects returned
 
 <h3>Return type 2: A flat list, i.e. a list that is not paged:</h3>
 <code>
-    {
-        success: true,
-        list: [{ ... }, { ... }]
-    }
+    [
+        {...},
+        {...}
+    ]
 </code>
 
 <h3>Return type 3: A paged list:</h3>
