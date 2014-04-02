@@ -21,6 +21,8 @@
         <li>SectionEnrollments</li>
         <li>Assignments</li>
         <li>Grades</li>
+        <li>Attendance</li>
+        
     </ul>
 </blockquote>
 
@@ -591,11 +593,13 @@ The list of dates is sorted by the most recent date first. Example:
         <code>[
     {
         date: "2013-11-04",
-        status: "P"
+        status: "P",
+        studentId : "1234"
     },
     {
         date: "2013-11-02"
         status: "A",
+         studentId : "1234",
         remarks: "Absent Medical"
     }
 ]</code>
@@ -640,6 +644,18 @@ Optional parameters you can pass in:
         </td>
     </tr>
     <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/attendance</td>
+        <td>Returns a paged list of dates for which attendance was taken. See retrieving by student ID above for the supported parameters. 
+</td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/attendance/{date}</td>
+        <td>Returns a paged list of each student's attendance for the specified date. 
+        </td>
+    </tr>
+    <tr>
         <td>POST</td>
         <td class="nowrap">/sms/v1/students/{student-id}/attendance/{date}</td>
         <td>Sets the attendance for a particular date. <div class="toggle-section">
@@ -650,13 +666,38 @@ You can pass in the following parameters:
 <b>description</b> - [optional] Information about the attendance taken. For example, it may specify the homeroom name.
         </div></td>
     </tr>
+    <tr>
+        <td>POST</td>
+        <td class="nowrap">/sms/v1/attendance/{date}</td>
+        <td>Sets the attendance for a particular date for multiple students. <div class="toggle-section">
+You can pass in the following parameters:
+
+<b>teacherId</b> - The teacher that is a homeroom teacher of the student.
+<b>attendance</b> - This should be formatted as a json string. Essentially, you'll be passing a list of students, and the status for each student. Example:
+
+<code>[{
+    studentId: "3421",
+    status: "P"
+}, {
+    studentId, "3288",
+    status: "P",
+    description: "A description"
+}]
+</code>
+Like the student ID version, <b>description</b> can be optionally passed in each object in <b>attendance</b>.
+
+    
+</div></td>
+    </tr>
+    
 </table>
 
 <h3>JSON result for a single attendance record:</h3>
 <code>
     {
         date: "2013-11-01",
-        status: "P"
+        status: "P",
+        studentId: "1234
     }
 </code>
 
