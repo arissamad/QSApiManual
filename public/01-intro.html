@@ -38,9 +38,9 @@ The <a href="#oauth">OAuth authorization</a> flow will give you an access token.
 <p>Calls using API keys, however, have no such restrictions. They are able to access and change any data. You should keep API keys  securely for this reason. For example, they should never be used in javascript or shared with students.</p>
 
 <h2 id="api-return">API Call Return Object</h2>
-<p>All API Calls return a JSON object (and never a JSON array).
+<p>API Calls return either a JSON object or a JSON array.
 
-The JSON object returned will always have a "success" field, which will be set to either true or false. For brevity, the "success" field is not included in the JSON return examples after this section.
+If a JSON object is returned, it will always have a "success" field, which will be set to either true or false. For brevity, the "success" field is not included in the JSON return examples after this section.
 
 Depending on the API method, there are 3 possible types of types of JSON objects returned. A method will always consistently return one of the following types. You cannot change the return type.</p>
 
