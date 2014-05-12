@@ -22,6 +22,7 @@
         <li>Assignments</li>
         <li>Grades</li>
         <li>Attendance</li>
+        <li>Self</li>
         
     </ul>
 </blockquote>
@@ -701,6 +702,40 @@ Like the student ID version, <b>description</b> can be optionally passed in each
     }
 </code>
 
+<h2 id="self">Self</h2>
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/self</td>
+        <td>Returns the details of the logged in user. For app store apps only.  <div class="toggle-section">
+<b>personType</b> can be one of:
+    "Student"
+    "Parent"
+    "Teacher"
+
+The following ID attributes are available for the given <b>personType</b>:
+    Student : <b>studentId</b>
+    Parent : <b>parentId</b>
+    Teacher : <b>teacherId</b>
+    
+This ID attribute value can then be used in other related resources for the logged in user, like retrieving the logged in student's attendance.
+        </div></td>
+    </tr>
+</table>
+
+<h3>JSON result for a self record:</h3>
+<code>
+    {
+        address: {
+            email: user@example.com
+        },
+        fullName: "John Doe",
+        personType: "Teacher",
+        teacherId: "56789",
+        userId: "12345"
+    }
+</code>
 </div>
 
 </body>
