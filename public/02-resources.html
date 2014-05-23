@@ -690,7 +690,24 @@ Like the student ID version, <b>description</b> can be optionally passed in each
     
 </div></td>
     </tr>
-    
+    <tr>
+        <td>DELETE</td>
+        <td class="nowrap">/sms/v1/students/{student-id}/attendance/{date}</td>
+        <td>Deletes the attendance for a particular date for the specified student.
+        </td>
+    </tr>
+    <tr>
+        <td>DELETE</td>
+        <td class="nowrap">/sms/v1/attendance/{date}</td>
+        <td>Deletes the attendance for a particular date for multiple students. <div class="toggle-section">
+You can pass in the following parameter:
+
+<b>studentIds</b> - This should be formatted as a json string. Essentially, you'll be passing a list of student ids. Example:
+
+<code>["3421","3288"]
+</code>
+</div></td>
+    </tr>
 </table>
 
 <h3>JSON result for a single attendance record:</h3>
