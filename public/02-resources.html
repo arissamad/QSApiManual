@@ -426,6 +426,35 @@ semesterId=12345: Returns the list of course sections for the specified semester
         <td class="nowrap">/sms/v1/sections/{section-id}</td>
         <td>Returns the details of the specified course section.</td>
     </tr>
+        <tr>
+        <td>POST</td>
+        <td class="nowrap">/sms/v1/sections</td>
+        <td>Creates a section.  <div class="toggle-section">
+Supports these required parameters:
+<b>classId</b>
+<b>sectionName</b>
+<b>sectionCode</b>
+<b>creditHours</b>
+<b>teacherIds</b> - This should be formatted as a json string. Essentially, you'll be passing a list of teacher ids. Example:
+
+<code>["4321","5678"]
+</code>
+</div></td>
+    </tr>
+    <tr>
+        <td>POST</td>
+        <td class="nowrap">/sms/v1/sections/{section-id}</td>
+                <td>Updates an existing section.  <div class="toggle-section">
+Supports these optional parameters:
+<b>sectionName</b>
+<b>sectionCode</b>
+<b>creditHours</b>
+<b>teacherIds</b> - This should be formatted as a json string. Essentially, you'll be passing a list of teacher ids. Example:
+
+<code>["4321","5678"]
+</code>
+</div></td>
+    </tr>
 </table>
 
 <h3>JSON result for a single subject section:</h3>
@@ -454,6 +483,27 @@ semesterId=12345: Returns the list of course sections for the specified semester
         <td>GET</td>
         <td class="nowrap">/sms/v1/sectionenrollments/{section-id}</td>
         <td>Returns the enrollments for a specific course section.</td>
+    </tr>
+    <tr>
+        <td>POST</td>
+        <td class="nowrap">/sms/v1/sectionenrollments/{section-id}</td>
+        <td>Enrolls students into a specific course section. <div class="toggle-section">
+Supports this required parameter:
+<b>studentIds</b> - This should be formatted as a json string. Essentially, you'll be passing a list of student ids. Example:
+
+<code>["1234","8765"]
+</code>
+</div></td>
+    </tr>
+    <tr>
+        <td>DELETE</td>
+        <td class="nowrap">/sms/v1/sectionenrollments/{section-id}</td>
+                <td>Unenrolls students from a specific course section. <div class="toggle-section">
+Supports this required parameter:
+<b>studentIds</b> - This should be formatted as a json string. Essentially, you'll be passing a list of student ids. Example:
+
+<code>["1234","8765"]
+</code></td>
     </tr>
 </table>
 
