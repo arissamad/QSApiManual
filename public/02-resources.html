@@ -542,7 +542,7 @@ Supports the following parameters:
     <tr>
         <td>GET</td>
         <td class="nowrap">/sms/v1/assignments/{assignment-id}</td>
-        <td>Returns the details of a single assignment.</td>
+        <td>Returns the details of a single assignment. </td>
     </tr>
     <tr>
         <td>POST</td>
@@ -585,6 +585,12 @@ Supports these parameters:
     }
 </code>
 
+<p>Notes:</p>
+
+<ul>
+    <li><b>sectionId:</b> You can get the section ID for each assignment. Add "fields=sectionId" in the query.</li>
+</ul>
+
 <h2 id="grades">Grades</h2>
 
 <h3>Resource URIs</h3>
@@ -597,6 +603,15 @@ Supports the following parameters:
 
 <b>sectionId</b> - Required.
 <b>assignmentId</b> - Optional. If not set, all assignments in the section will be included.
+<b>includeOnlyFinalGrades</b> - Optional. Set to true or false (default is false).
+</div></td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/assignments/{assignment-id}/grades</td>
+        <td>Returns the list of students and the grades achieved for the specified assignment. <div class="toggle-section">
+Supports the following parameters:
+
 <b>includeOnlyFinalGrades</b> - Optional. Set to true or false (default is false).
 </div></td>
     </tr>
