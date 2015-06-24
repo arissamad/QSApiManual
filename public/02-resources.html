@@ -212,7 +212,16 @@ If the school is an individual school that's not part of a group, a single schoo
     <tr>
         <td>GET</td>
         <td class="nowrap">/sms/v1/teachers</td>
-        <td>Returns the list of all teachers.</td>
+        <td>Returns the list of all teachers. <div class="toggle-section">
+<b>Searching</b>
+You can search by passing in the "search" parameter. For example: "search=Samantha".
+
+This will search for a match in the following fields: Teachers's full name and employee name.
+
+<b>Search by employee numbers</b>
+You can search by a comma-separated list of employee numbers by passing in the "employeeNumbers" parameter. For example: "employeeNumbers=000001,000002".
+  
+</div></td>
     </tr>
     <tr>
         <td>GET</td>
@@ -282,6 +291,9 @@ You can search by passing in the "search" parameter. For example: "search=Alvin"
 
 This will search for a match in the following fields: Student's full name, student number, and class name.
     
+<b>Search by student numbers</b>
+You can search by a comma-separated list of student numbers by passing in the "studentNumbers" parameter. For example: "studentNumbers=000001,000002".
+  
 <b>Filtering</b>
 You can also filter the list of students by passing in one of the following filtering parameters.
 
