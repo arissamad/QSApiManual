@@ -404,6 +404,24 @@ Here is a list of supported fields, which are self-explanatory: studentNumber, e
         <td class="nowrap">/sms/v1/parents/{parent-id}</td>
         <td>Returns the details of the specified parent.</td>
     </tr>
+    <tr>
+        <td>POST</td>
+        <td class="nowrap">/sms/v1/parents/{parent-id}</td>
+        <td>Updates an existing parent. <div class="toggle-section">
+Supports these optional parameters:
+<b>fullName</b>
+<b>cellPhone</b>
+<b>homePhone</b>
+<b>businessPhone</b>
+<b>email</b>         
+<b>address</b>
+<b>city</b>
+<b>state</b>
+<b>zip</b>
+<b>country</b>
+</div>
+</td>
+    </tr>
 </table>
 
 <h3>JSON result for a single parent</h3>
@@ -420,6 +438,12 @@ Here is a list of supported fields, which are self-explanatory: studentNumber, e
     <li><b>Children:</b> You can get the list of children (students) for each parent. Add "fields=students" in the query.</li>
 </ul>
 
+<h3>Additional Fields</h3>
+
+<p>You can request additional fields by passing in the "fields" parameter with a comma-separated list. For example: "fields=cellPhone,homePhone".
+    
+Here is a list of supported fields, which are self-explanatory: email, homePhone, cellPhone, city, state, zip, country.
+</p>
 
 <h2 id="sections">Sections</h2>
 
@@ -536,6 +560,53 @@ Supports this required parameter:
     }
 </code>
 
+<h2 id="student-sections">StudentSections</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/studentsections</td>
+        <td>Returns the list of students, and the course sections that each student is enrolled in, for the current active semester. Supports these additional parameters:
+            
+semesterId=12345: Returns the list of course sections for the specified semester.
+studentIds=3,4: Only returns data for the specified students.
+        </td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/studentsections/{student-id}</td>
+        <td>Returns the list of course sections that the specified student is enrolled in, for the current active semester. Supports these additional parameters:
+            
+semesterId=12345: Returns the list of course sections for the specified semester.
+        </td>
+    </tr>
+</table>
+
+<h3>JSON result for the sections that a student is taking:</h3>
+<code>
+    {
+        id: "3",
+        fullName: "Michelle Harris",
+        sections: [
+            {
+                id: "3",
+                sectionCode: "ENG-01",
+                sectionName: "English 01"
+            },
+            {
+                id: "4",
+                sectionCode: "ENG-02",
+                sectionName: "English 02"
+            }
+        ]
+    }
+</code>
+
+<h3>Additional Parameters</h3>
+
+<p>semesterId=12345: Returns the list of course sections for the specified semester.</p>
+  
 <h2 id="assignment">Assignments</h2>
 
 <p>Assignments refer to the columns in the gradebook.</p>
