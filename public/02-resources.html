@@ -297,20 +297,17 @@ You can search by a comma-separated list of student numbers by passing in the "s
 <b>Filtering</b>
 You can also filter the list of students by passing in one of the following filtering parameters.
 
-homeroomId
-classId
-parentId
+    showDeleted=true: Includes deleted students.
+    showHasLeft=true: Includes students who have graduated.
+    classId=12345: Filters for students in the specified class (grade level).
+    homeroomId=12345: Filters for students in the specified homeroom
+    parentId=12345: Filters for students of the specified parent
     </div></td>
     </tr>
     <tr>
         <td>GET</td>
         <td class="nowrap">/sms/v1/students/{student-id}</td>
-        <td>Returns the details of the specified student. Supports these additional parameters:
-        
-    showDeleted=true: Includes deleted students.
-    showHasLeft=true: Includes students who have graduated.
-    classId=12345: Filters for students in the specified class (grade level).
-        </td>
+        <td>Returns the details of the specified student.</td>
     </tr>
     <tr>
         <td>POST</td>
