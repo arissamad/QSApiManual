@@ -85,6 +85,14 @@ Here's an example where you retrieve 50 items per page, and you want to retrieve
 </code>
 
 <p>Remember, for methods that return a list of items, some methods will return a flat list, and others will return a paged list. You cannot control the return type.</p>
+  
+  
+<h2 id="handling-dates">Handling Dates</h2>
+<p>When doing a POST, and a date is required, you can send a string in the folowing format: YYYY-MM-DD.</p>
+<p>For example, "2015-01-01".
+  
+  <p>When retrieving dates, the values are returned in the same YYYY-MM-DD format.</p>
+  
     
 <h2 id="api-errors">Errors</h2>
 <p>In the event of an error, we will respond with an HTTP Status Code. The JSON body will contain more detailed information about the error.

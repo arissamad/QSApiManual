@@ -238,11 +238,13 @@ Example:
 </code>
 It returns the json object for the teacher that was created. An additional boolean field, "isExistingRecord", is also returned.
 
-The only required field is teacherName. All other fields are optional. The supported fields are:
+The only required field is teacherName or employeeNumber. All other fields are optional. The supported fields are:
 
-<b>teacherName</b> - If the teacher name matches an existing record, the existing record will be updated. Otherwise, a new record will be created.
+<b>teacherName</b> - If the teacher name matches an existing record, the existing record will be updated. Otherwise, a new record will be created if employeeNumber is given and also does not match.
 <b>preferredName</b>
-<b>employeeNumber</b>
+<b>employeeNumber</b> - If the employee number matches an existing record, the existing record will be updated.
+<b>firstName</b>
+<b>middleName</b>
 <b>familyName</b>
 <b>teacherInitials</b>
 <b>title</b>
@@ -278,6 +280,13 @@ The only required field is teacherName. All other fields are optional. The suppo
     }
 </code>
 
+<h3>Additional Fields</h3>
+
+<p>You can request additional fields by passing in the "fields" parameter with a comma-separated list. For example: "fields=cellPhone,homePhone".
+    
+Here is a list of supported fields, which are self-explanatory: firstName, middleName, familyName, employeeNumber, employmentDate, birthDate, title, email, homePhone, cellPhone, city, state, zip.
+</p>
+  
 <h2 id="students">Students</h2>
 
 <h3>Resource URIs</h3>
@@ -384,7 +393,7 @@ You can specify up to 2 parents. Just change the index of the field, i.e. parent
 
 <p>You can request additional fields by passing in the "fields" parameter with a comma-separated list. For example: "fields=enrollmentDate,hasLeft".
     
-Here is a list of supported fields, which are self-explanatory: studentNumber, enrollmentDate, parents, siblings, homeroomId, homeroomTeacher, multiLineResidentialAddress, country, zip, state, city, phone, cellPhone, fax, email, nationality, confidentialInformation, deleted, hasLeft, isExpelled, customFields.
+Here is a list of supported fields, which are self-explanatory: studentNumber, birthDate, enrollmentDate, parents, siblings, homeroomId, homeroomTeacher, multiLineResidentialAddress, country, zip, state, city, phone, cellPhone, fax, email, nationality, confidentialInformation, firstName, middleName, familyName, deleted, hasLeft, isExpelled, customFields.
 </p>
 
 <h2 id="parents">Parents</h2>
@@ -439,7 +448,7 @@ Supports these optional parameters:
 
 <p>You can request additional fields by passing in the "fields" parameter with a comma-separated list. For example: "fields=cellPhone,homePhone".
     
-Here is a list of supported fields, which are self-explanatory: firstName, middleName, lastName, email, homePhone, cellPhone, city, state, zip, country.
+Here is a list of supported fields, which are self-explanatory: firstName, middleName, familyName, email, homePhone, cellPhone, city, state, zip, country.
 </p>
 
 <h2 id="sections">Sections</h2>
