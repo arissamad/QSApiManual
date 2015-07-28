@@ -220,7 +220,13 @@ This will search for a match in the following fields: Teachers's full name and e
 
 <b>Search by employee numbers</b>
 You can search by a comma-separated list of employee numbers by passing in the "employeeNumbers" parameter. For example: "employeeNumbers=000001,000002".
-  
+
+<b>Filtering</b>
+You can also filter the list of teachers by passing in one of the following filtering parameters.
+
+    showDeleted=true: Includes deleted teachers.
+    showHasLeft=true: Includes teachers who have left and are no longer working at the school.
+          
 </div></td>
     </tr>
     <tr>
@@ -268,6 +274,17 @@ The only required field is teacherName or employeeNumber. All other fields are o
 <b>experience</b>
         </td>
     </tr>
+    <tr>
+      <td>DELETE</td>
+      <td class="nowrap">/sms/v1/teachers/{teacher-id}</td>
+      <td>Marks the specified teacher as having left. <div class="toggle-section">
+Supports these parameters:
+        
+<b>delete</b> - Optional. By default, this is set to false, i.e. a teacher is marked as having left the school rather than being deleted. If delete=true, then the teacher is marked deleted instead (and leaveDate is ignored in this case).
+
+<b>leaveDate</b> - For example,  "2015-12-31". This is needed only if delete=false.
+      </td>
+    </tr>
 </table>
 
 <h3>JSON result for a single teacher</h3>
@@ -284,7 +301,7 @@ The only required field is teacherName or employeeNumber. All other fields are o
 
 <p>You can request additional fields by passing in the "fields" parameter with a comma-separated list. For example: "fields=cellPhone,homePhone".
     
-Here is a list of supported fields, which are self-explanatory: firstName, middleName, familyName, employeeNumber, employmentDate, birthDate, title, email, homePhone, cellPhone, city, state, zip.
+Here is a list of supported fields, which are self-explanatory: firstName, middleName, familyName, employeeNumber, employmentDate, birthDate, title, email, homePhone, cellPhone, city, state, zip, hasLeft, deleted.
 </p>
   
 <h2 id="students">Students</h2>
@@ -406,7 +423,12 @@ Other fields which require explanation:
     <tr>
         <td>GET</td>
         <td class="nowrap">/sms/v1/parents</td>
-        <td>Returns the list of all parents.</td>
+        <td>Returns the list of all parents. <div class="toggle-section">
+<b>Filtering</b>
+You can also filter the list of parents by passing in one of the following filtering parameters.
+
+    showDeleted=true: Includes deleted parents.
+        </div></td>
     </tr>
     <tr>
         <td>GET</td>
@@ -451,7 +473,7 @@ Supports these optional parameters:
 
 <p>You can request additional fields by passing in the "fields" parameter with a comma-separated list. For example: "fields=cellPhone,homePhone".
     
-Here is a list of supported fields, which are self-explanatory: firstName, middleName, familyName, email, homePhone, cellPhone, city, state, zip, country.
+Here is a list of supported fields, which are self-explanatory: firstName, middleName, familyName, email, homePhone, cellPhone, city, state, zip, country, deleted.
 </p>
 
 <h2 id="sections">Sections</h2>
