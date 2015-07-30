@@ -909,12 +909,12 @@ You can pass in the following parameter:
 <table class="data">
     <tr>
         <td>GET</td>
-        <td class="nowrap">/sms/v1/students/roles</td>
+        <td class="nowrap">/sms/v1/roles</td>
         <td>Returns the list of available roles.</td>
    </tr>
     <tr>
         <td>GET</td>
-        <td class="nowrap">/sms/v1/students/roles/user</td>
+        <td class="nowrap">/sms/v1/roles/user</td>
         <td>Returns the list of roles assigned to a particular user. <div class="toggle-section">
 Required fields:
           <b>type</b>: One of “student”, “teacher” or “parent”.
@@ -923,7 +923,7 @@ Required fields:
    </tr>
     <tr>
         <td>POST</td>
-        <td class="nowrap">/sms/v1/students/roles/user</td>
+        <td class="nowrap">/sms/v1/roles/user</td>
         <td>Assigns and unassigns roles for the specified user. <div class="toggle-section">
 For convenience, this method accepts the role Meta ID, rather than the role ID. This is an english-readable
 method of referring to a role that can be made consistent across all schools in a group.
