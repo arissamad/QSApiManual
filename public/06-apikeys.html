@@ -1,0 +1,51 @@
+<html>
+<head>
+  <link href="reset.css" rel="stylesheet" type="text/css"></script>
+  <link href="manual.css" rel="stylesheet" type="text/css"></script>
+</head>
+
+<body>
+
+<div class="content">
+<h1 id="api-keys">API Keys</h1>
+
+<h2 id="provisioning-api-keys">Provisioning API Keys</h2>
+<p>If you want to make API calls from your school webserver or other school-specific application, you'll need an API key.</p>
+
+<p><b>Remember that you shouldn't use an API Key to make calls from native QuickSchools apps that you build from the App Developer Console. See that section for details.</b></p>
+
+<p>You create and manage API Keys from within your QuickSchools account. Be sure to keep those secure, and never expose them in javascript. It should only be stored and used within secure server environments.</p>
+
+<p>Once you've gotten an API key, send that along with all API calls as the "apiKey" parameter.</p>
+
+<p>The following are the steps to get an API Key.</p>
+
+
+<h3>Step 1: Give yourself access to the API Keys page.</h3>
+<p>Go to the Settings menu on the top. Scroll down till you see the section titled "Interested in developing your own apps?"
+
+Click Enable (or Configure if you have already enabled it in the past).
+
+Now give yourself access to the API Key page.
+</p>
+
+<h3>Step 2: Navigate to the API Keys page.</h3>
+<p>You'll see a new menu appear titled "App Developer Console". Click on that, and if you are not yet at the API Keys page, click on the API Keys submenu.
+</p>
+
+<h3>Step 3: Create an API Key.</h3>
+<p>Click on "Create new API Key". Enter in some notes so you can remember what this key is for. Once you've generated the API Key, you'll be able to show the secret key from that screen.
+</p>
+
+<p>You're done! You can now send the API Key as the "apiKey" query parameter in your API calls.
+</p>
+
+<h2 id="group-school-access">Access to all schools in your group</h2>
+
+<p>If your school has been configured as part of a group/district, you can enable the API Key to access all schools in the group.</p>
+<p>When viewing your API Keys, you'll see the option to enable the API Key to have access to all schools.</p>
+<p>Once the API Key has been given access to all schools, you can explicity specify the school you want to access when making API calls. Simply set the "subdomain" parameter to the school code of interest. For example, if the school URL is "http://asc.quickschools.com", you can access that school by passing in "subdomain=asc" in your API call.</p>
+</div>
+
+</body>
+</html>
