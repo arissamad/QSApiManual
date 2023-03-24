@@ -1,0 +1,428 @@
+<html>
+<head>
+  <link href="reset.css" rel="stylesheet" type="text/css"></script>
+  <link href="manual.css" rel="stylesheet" type="text/css"></script>
+</head>
+
+<body>
+
+<div class="content">
+<h1 id="oneroster-resources">OneRoster API Resources</h1>
+<p>The following are the list of resources that you can query or modify.</p>
+
+<blockquote>
+  <ul>
+    <li>Authorization</li>
+    <li>Token Endpoint</li>
+    <li>Search and Sort</li>
+    <li>Users</li>
+    <li>Students</li>
+    <li>Teachers</li>
+    <li>Orgs</li>
+    <li>AcademicSessions</li>
+    <li>Courses</li>
+    <li>Classrooms</li>
+    <li>Enrollments</li>
+  </ul>
+</blockquote>
+
+<h2 id="authorization">Authorization</h2>
+<p>
+IMS OneRoster required the use of OAuth 2.0 Bearer Tokens (Client Credentials) for all the core resources.
+
+Refer to the <a href="#oauth">OAuth authorization</a> section on how to register an application in QuickSchools.
+</p>
+
+<h2 id="token-endpoint">Token Endpoint</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+  <tr>
+    <td>POST</td>
+    <td class="nowrap">/sms/oauth2/token?</td>
+    <td>Returns the Access Token <div class="toggle-section">
+The return access_token expired in one hour. Once expired, you must call the token endpoint again to get a new access token. If you use an expired access token in the core resources APIs, you will get error like this:
+
+<code>
+  {
+    "error_description": "Access token expired",
+    "error": "invalid_client"
+  }
+</code>
+
+There are no required fields for the Access Token. Following fields are optional:
+
+<b>grant_type</b> - Example: "client_credentials"
+<b>scope</b> - The scopes are defined by IMS OneRoster v1.1 specification. Must be in full URL.
+
+</div></td>
+  </tr>
+</table>
+
+<h2 id="sort-and-filter">Sort and Filer</h2>
+<p>Listed below are parameters that can be used for sorting and filtering the API Responses. Can be used for any of the core resource URIs.
+</p>
+
+<h3>Pagination</h3>
+<table class="data">
+  <tr>
+    <td><code>limit</code></td>
+    <td class="nowrap">The number of results to return.</td>
+    <td>Optional</td>
+  </tr>
+  <tr>
+    <td><code>offset</code></td>
+    <td class="nowrap">The index of the first record to return. (zero indexed)</td>
+    <td>Optional</td>
+  </tr>
+</table>
+
+<h3>Sorting</h3>
+<table class="data">
+  <tr>
+    <td><code>sort</code></td>
+    <td class="nowrap">sort=data_field
+data_field MUST be used in the request to ask for the collection to be sorted on the data field.
+    </td>
+    <td>Optional</td>
+  </tr>
+  <tr>
+    <td><code>orderBy</code></td>
+    <td class="nowrap">orderBy MAY be used in the request to ask for the collection to be ordered ascending (asc) or descending (desc).</td>
+    <td>Optional</td>
+  </tr>
+</table>
+
+<h3>Filtering</h3>
+<table class="data">
+  <tr>
+    <td><code>filter</code></td>
+    <td class="nowrap"> Filter requests MUST consist of the form: <code>?filter={data field}{predicate}{value}</code> or <code>?filter={data field}{predicate}{value}{logical}{data field}{predicate}{value}</code></td>
+    <td>Optional</td>
+  </tr>
+</table>
+
+<h3>Field Selection</h3>
+<table class="data">
+  <tr>
+    <td><code>fields</code></td>
+    <td class="nowrap">The value of fields is a comma delimited list of the fields to return.</td>
+    <td>Optional</td>
+  </tr>
+</table>
+
+<h2 id="users">Users</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+  <tr>
+    <td>GET</td>
+    <td class="nowrap">/sms/ims/oneroster/v1p1/users?</td>
+    <td>Returns all users (teacher / parent / student)</td>
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td class="nowrap">/sms/ims/oneroster/v1p1/users/{id}?</td>
+    <td>Returns a specific user record</td>
+  </tr>
+</table>
+
+<h3>JSON result for a single user:</h3>
+<code>
+  [
+    {
+      "sourcedId": "T-207063",
+      "enabledUser": true,
+      "role": "teacher",
+      "phone": "213-457-4575",
+      "givenName": "Agustine",
+      "familyName": "Pavelka",
+      "sms": "213-457-4575",
+      "middleName": "",
+      "grades": {},
+      "orgs": [
+      {
+        "sourcedId": "54976",
+        "type": "org"
+      }],
+      "email": "agustine@mailinator.com",
+      "status": "active"
+    }
+  ]
+</code>
+
+<h2 id="students">Students</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+  <tr>
+    <td>GET</td>
+    <td class="nowrap">/sms/ims/oneroster/v1p1/students?</td>
+    <td>Returns all students</td>
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td class="nowrap">/sms/ims/oneroster/v1p1/students/{id}?</td>
+    <td>Returns a specific student record</td>
+  </tr>
+</table>
+
+<h3>JSON result for a single student:</h3>
+<code>
+  [
+    {
+      "sourcedId": "S-1249563",
+      "enabledUser": false,
+      "role": "student",
+      "givenName": "Jane ",
+      "grades": {
+        "level": "4th Grade",
+        "abbrev": "04"
+      },
+      "agents": [
+      {
+        "sourcedId": "P-779350"
+      }],
+      "phone": "",
+      "familyName": "Downey",
+      "sms": "",
+      "middleName": "",
+      "orgs": [
+      {
+        "sourcedId": "54976",
+        "type": "org"
+      }],
+      "email": "jane@mailinator.com",
+      "status": "active"
+    }
+  ]
+</code>
+
+<h2 id="teachers">Teachers</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+  <tr>
+    <td>GET</td>
+    <td class="nowrap">/sms/ims/oneroster/v1p1/teachers?</td>
+    <td>Returns all teachers</td>
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td class="nowrap">/sms/ims/oneroster/v1p1/teachers/{id}?</td>
+    <td>Returns a specific teacher record</td>
+  </tr>
+</table>
+
+<h3>JSON result for a single teacher:</h3>
+<code>
+  [
+    {
+      "sourcedId": "T-207067",
+      "enabledUser": true,
+      "role": "teacher",
+      "phone": "213-457-4579",
+      "givenName": "Tenesha",
+      "familyName": "Dorough",
+      "sms": "213-457-4579",
+      "middleName": "",
+      "grades": {},
+      "orgs": [
+      {
+        "sourcedId": "54976",
+        "type": "org"
+      }],
+      "email": "tenesha@mailinator.com",
+      "status": "active"
+    }
+  ]
+</code>
+
+<h2 id="orgs">Orgs</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+  <tr>
+    <td>GET</td>
+    <td class="nowrap">/sms/ims/oneroster/v1p1/orgs?</td>
+    <td>Returns all orgs</td>
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td class="nowrap">/sms/ims/oneroster/v1p1/orgs/{id}?</td>
+    <td>Returns a specific org record</td>
+  </tr>
+</table>
+
+<h3>JSON result for a single org:</h3>
+<code>
+  [
+    {
+      "sourcedId": "54976",
+      "identifier": "myschool",
+      "name": "My Academic Org",
+      "type": "school",
+      "status": "active"
+    }
+  ]
+</code>
+
+<h2 id="academic-sessions">Academic Sessions</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+  <tr>
+    <td>GET</td>
+    <td class="nowrap">/sms/ims/oneroster/v1p1/academicSessions?</td>
+    <td>Returns all academic sessions</td>
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td class="nowrap">/sms/ims/oneroster/v1p1/academicSessions/{id}?</td>
+    <td>Returns a specific academic session</td>
+  </tr>
+</table>
+
+<h3>JSON result for a single academic session:</h3>
+<code>
+  [
+    {
+      "sourcedId": "85047",
+      "endDate": "2022-12-31",
+      "schoolYear": "2022",
+      "title": "2nd Semester",
+      "type": "term",
+      "startDate": "2022-07-01",
+      "status": "active"
+    }
+  ]
+</code>
+
+<h2 id="courses">Courses</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+  <tr>
+    <td>GET</td>
+    <td class="nowrap">/sms/ims/oneroster/v1p1/courses?</td>
+    <td>Returns all courses</td>
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td class="nowrap">/sms/ims/oneroster/v1p1/courses/{id}?</td>
+    <td>Returns a specific course</td>
+  </tr>
+</table>
+
+<h3>JSON result for a single course:</h3>
+<code>
+  [
+    {
+      "sourcedId": "3250762",
+      "org": {
+        "sourcedId": "54976",
+        "type": "org"
+      },
+      "courseCode": "English",
+      "schoolYear": {
+        "sourcedId": "60632",
+        "type": "schoolYear"
+      },
+      "grades": {
+        "level": "4th Grade",
+        "abbrev": "04"
+      },
+      "title": "English",
+      "status": "active"
+    }
+  ]
+</code>
+
+<h2 id="classes">Classes</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+  <tr>
+    <td>GET</td>
+    <td class="nowrap">/sms/ims/oneroster/v1p1/classes?</td>
+    <td>Returns all classes</td>
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td class="nowrap">/sms/ims/oneroster/v1p1/classes/{id}?</td>
+    <td>Returns a specific class</td>
+  </tr>
+</table>
+
+<h3>JSON result for a single class:</h3>
+<code>
+  [
+    {
+      "sourcedId": "3250762",
+      "classCode": "English",
+      "terms": {
+        "sourcedId": "85047",
+        "type": "term"
+      },
+      "school": {
+        "sourcedId": "54976",
+        "type": "org"
+      },
+      "course": {
+        "sourcedId": "3250762",
+        "type": "course"
+      },
+      "grades": {
+        "level": "4th Grade",
+        "abbrev": "04"
+      },
+      "title": "English",
+      "classType": "scheduled",
+      "status": "active"
+    }
+  ]
+</code>
+
+<h2 id="enrollments">Enrollments</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+  <tr>
+    <td>GET</td>
+    <td class="nowrap">/sms/ims/oneroster/v1p1/enrollments?</td>
+    <td>Returns all enrollments</td>
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td class="nowrap">/sms/ims/oneroster/v1p1/enrollments/{id}?</td>
+    <td>Returns a specific enrollment</td>
+  </tr>
+</table>
+
+<h3>JSON result for a single enrollment:</h3>
+<code>
+  [
+    {
+      "sourcedId": "21486074",
+      "role": "student",
+      "school": {
+        "sourcedId": "54976",
+        "type": "org"
+      },
+      "user": {
+        "sourcedId": "S-1249564",
+        "type": "user"
+      },
+      "class": {
+        "sourcedId": "3108719",
+        "type": "class"
+      },
+      "primary": false,
+      "status": "active"
+    }
+  ]
+</code>
+</div>
+
+</body>
+</html>
