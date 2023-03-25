@@ -43,8 +43,7 @@ Refer to the <a href="#oauth">OAuth authorization</a> section on how to register
     <td>Returns the Access Token <div class="toggle-section">
 The return access_token expired in one hour. Once expired, you must call the token endpoint again to get a new access token. If you use an expired access token in the core resources APIs, you will get error like this:
 
-<code>
-  {
+<code>{
     "error_description": "Access token expired",
     "error": "invalid_client"
   }
@@ -62,54 +61,37 @@ There are no required fields for the Access Token. Following fields are optional
 <h2 id="sort-and-filter">Sort and Filer</h2>
 <p>Listed below are parameters that can be used for sorting and filtering the API Responses. Can be used for any of the core resource URIs.
 </p>
-
-<h3>Pagination</h3>
 <table class="data">
   <tr>
-    <td><code>limit</code></td>
-    <td class="nowrap">The number of results to return.</td>
-    <td>Optional</td>
+    <td rowspan="2">Pagination</td>
+    <td class="nowrap">limit</td>
+    <td>The number of results to return.</td>
   </tr>
   <tr>
-    <td><code>offset</code></td>
-    <td class="nowrap">The index of the first record to return. (zero indexed)</td>
-    <td>Optional</td>
+    <td class="nowrap">offset</td>
+    <td>The index of the first record to return. (zero indexed)</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Sorting</td>
+    <td class="nowrap">sort</td>
+    <td>data_field MUST be used in the request to ask for the collection to be sorted on the data field. Example: <code>sort=data_field</code></td>
+  </tr>
+  <tr>
+    <td class="nowrap">orderBy</td>
+    <td>orderBy MAY be used in the request to ask for the collection to be ordered ascending (asc) or descending (desc).</td>
+  </tr>
+  <tr>
+    <td >Filtering</td>
+    <td class="nowrap">filter</td>
+    <td>Filter requests MUST consist of the form: <code>?filter={data field}{predicate}{value}</code> or <code>?filter={data field}{predicate}{value}{logical}{data field}{predicate}{value}</code></td>
+  </tr>
+  <tr>
+    <td >Field Selection</td>
+    <td class="nowrap">fields</td>
+    <td>The value of fields is a comma delimited list of the fields to return.</td>
   </tr>
 </table>
 
-<h3>Sorting</h3>
-<table class="data">
-  <tr>
-    <td><code>sort</code></td>
-    <td class="nowrap">sort=data_field
-data_field MUST be used in the request to ask for the collection to be sorted on the data field.
-    </td>
-    <td>Optional</td>
-  </tr>
-  <tr>
-    <td><code>orderBy</code></td>
-    <td class="nowrap">orderBy MAY be used in the request to ask for the collection to be ordered ascending (asc) or descending (desc).</td>
-    <td>Optional</td>
-  </tr>
-</table>
-
-<h3>Filtering</h3>
-<table class="data">
-  <tr>
-    <td><code>filter</code></td>
-    <td class="nowrap"> Filter requests MUST consist of the form: <code>?filter={data field}{predicate}{value}</code> or <code>?filter={data field}{predicate}{value}{logical}{data field}{predicate}{value}</code></td>
-    <td>Optional</td>
-  </tr>
-</table>
-
-<h3>Field Selection</h3>
-<table class="data">
-  <tr>
-    <td><code>fields</code></td>
-    <td class="nowrap">The value of fields is a comma delimited list of the fields to return.</td>
-    <td>Optional</td>
-  </tr>
-</table>
 
 <h2 id="users">Users</h2>
 
