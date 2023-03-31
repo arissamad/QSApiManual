@@ -1,0 +1,991 @@
+<html>
+<body>
+
+<div class="content">
+
+<h1 id="rest-resources">REST Resources</h1>
+<p>The following are the list of resources that you can query or modify.
+</p>
+
+<blockquote>
+    <ul>
+        <li>SchoolGroups</li>
+        <li>Schools</li>
+        <li>Semesters</li>
+        <li>Classes</li>
+        <li>Homerooms</li>
+        <li>Teachers</li>
+        <li>Students</li>
+        <li>Parents</li>
+        <li>Sections</li>
+        <li>SectionEnrollments</li>
+        <li>Assignments</li>
+        <li>Grades</li>
+        <li>Attendance</li>
+        <li>Self</li>
+        
+    </ul>
+</blockquote>
+
+<h2 id="groups">SchoolGroups</h2>
+<p>In QuickSchools, groups of schools are organized as SchoolGroups. For example, a district would be set up as a SchoolGroup.
+    
+Individual schools don't have to belong to a SchoolGroup.
+</p>
+
+<h3>Resouce URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/schoolgroup</td>
+        <td>Returns details of the current user's SchoolGroup.</td>
+    </tr>
+</table>
+
+<h3>JSON result if the school associated with the current user or apiKey belongs to a school group:</h3>
+<code>
+    {
+        isPartOfSchoolGroup: true,
+        schoolGroupId: "6",
+        name: "The Wildflower Group Of Schools",
+        billingSchoolId: "3"
+    }
+</code>
+<p>Notes:</p>
+<ul>
+    <li>billingSchoolId: This is a school in the group that processes the bills for all the schools in the group.</li>
+</ul>
+
+<h3>JSON result if the current user of apiKey belongs to an individual school which is not part of a school group:</h3>
+<code>
+    {
+        isPartOfSchoolGroup: false
+    }
+</code>
+
+<h2 id="schools">Schools</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/schools</td>
+        <td>Returns the list of schools that belong to the current user's SchoolGroup.
+        
+If the school is an individual school that's not part of a group, a single school will be returned in the list.</td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/school</td>
+        <td>Returns the details of the school associated with the currently-authenticated user or apiKey.</td>
+    </tr>
+</table>
+
+<h3>JSON result:</h3>
+<code>
+    {
+        id: "3",
+        schoolCode: "applecreek",
+        schoolName: "Apple Creek School",
+        principalName: "John Smith",
+        address: "5 Palm Court, Sunnyvale, CA 94086",
+        email: "info@applecreekschool.edu",
+        website: "http://www.applecreekschool.edu",
+        phone: "(111) 444 4444"
+    }
+</code>
+
+<p>Notes:</p>
+<ul>
+    <li>The school phone is simply a user-entered string and is not guaranteed to match any particular format.</li>
+</ul>
+
+<h2 id="semesters">Semesters</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/semesters</td>
+        <td>Returns the list of semesters.</td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/semesters/{semester-id}</td>
+        <td>Returns the details of the specified semester.</td>
+    </tr>
+</table>
+
+<h3>JSON result for a single semester</h3>
+<code>
+    {
+        id: "3",
+        semesterName: "1st Quarter",
+        yearId: "3",
+        yearName: "2013/2014",
+        startDate: "2013-01-01",
+        endDate: "2013-05-01",
+        isActive: true
+    }
+</code>
+
+<p>Notes:</p>
+
+<ul>
+    <li>There is always a semester which is the current active semester. This will have isActive = true.</li>
+    <li>A year can have multiple semesters.</li>
+</ul>
+
+<h2 id="classes">Classes</h2>
+<p>A class is a year level, like 1st Grade or 2nd Grade.</p>
+
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/classes</td>
+        <td>Returns the list of classes (year levels like 1st Grade).</td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/classes/{class-id}</td>
+        <td>Returns the details of the specified class.</td>
+    </tr>
+</table>
+
+<h3>JSON result for a single class:</h3>
+<code>
+    {
+        id: "3",
+        sortOrder: 5,
+        name: "1st Grade",
+        abbreviation: "G01"
+    }
+</code>
+
+<p>Notes:</p>
+
+<ul>
+    <li>Classes are typically sorted by a field called "sortOrder", and not alphabetically. This, for example, allows Kindergarten to be listed before 1st Grade.</li>
+</ul>
+
+<h2 id="homerooms">Homerooms</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/homerooms</td>
+        <td>Returns the list of homerooms.</td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/homerooms/{homeroom-id}</td>
+        <td>Returns the details of the specified homeroom.</td>
+    </tr>
+</table>
+
+<h3>JSON result for a single homeroom:</h3>
+<code>
+    {
+        id: "3",
+        classId: "5",
+        name: "Mary Smith",
+        abbreviation: "Mary Smith-G01"
+        homeroomTeacherName: "Mary Smith",
+        homeroomTeacherId: "29"
+    }
+</code>
+
+<p>Notes:</p>
+
+<ul>
+    <li>A class (i.e. year-level like 1st Grade) can have several homerooms. Thus, each homeroom record has a reference to the parent classId.</li>
+    <li>Every homeroom has a homeroom teacher.</li>
+    <li>For smaller schools, the name of the homeroom matches the name of the homeroom teacher. But for larger schools, homerooms might be named differently from the teacher in charge.</li>
+</ul>
+
+<h2 id="teachers">Teachers</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/teachers</td>
+        <td>Returns the list of all teachers. <div class="toggle-section">
+<b>Searching</b>
+You can search by passing in the "search" parameter. For example: "search=Samantha".
+
+This will search for a match in the following fields: Teachers's full name and employee name.
+
+<b>Search by employee numbers</b>
+You can search by a comma-separated list of employee numbers by passing in the "employeeNumbers" parameter. For example: "employeeNumbers=000001,000002".
+
+<b>Filtering</b>
+You can also filter the list of teachers by passing in one of the following filtering parameters.
+
+    showDeleted=true: Includes deleted teachers.
+    showHasLeft=true: Includes teachers who have left and are no longer working at the school.
+          
+</div></td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/teachers/{teacher-id}</td>
+        <td>Returns the details of the specified teacher.</td>
+    </tr>
+    <tr>
+        <td>POST</td>
+        <td class="nowrap">/sms/v1/teachers</td>
+        <td>Adds or updates a teacher record. <div class="toggle-section">
+Example:
+
+<code>curl https://api.quickschools.com/sms/v1/teachers?apiKey=[YOUR API KEY] --data "teacherName=Mike Summers&preferredName=Mr. Summers"
+</code>
+It returns the json object for the teacher that was created. An additional boolean field, "isExistingRecord", is also returned.
+
+The only required field is teacherName or employeeNumber. All other fields are optional. The supported fields are:
+
+<b>teacherName</b> - If the teacher name matches an existing record, the existing record will be updated. Otherwise, a new record will be created if employeeNumber is given and also does not match.
+<b>preferredName</b>
+<b>employeeNumber</b> - If the employee number matches an existing record, the existing record will be updated.
+<b>firstName</b>
+<b>middleName</b>
+<b>familyName</b>
+<b>teacherInitials</b>
+<b>title</b>
+<b>birthDate</b>
+<b>gender</b> - This can be either "male" or "female".
+<b>nationality</b>
+<b>maritalStatus</b>
+<b>employmentDate</b>
+<b>spouseName</b>
+<b>socialSecurity</b>
+<b>addressLine1</b>
+<b>addressLine2</b>
+<b>zip</b>
+<b>city</b>
+<b>state</b>
+<b>email</b>
+<b>phone</b>
+<b>cellPhone</b>
+<b>degree</b>
+<b>certification</b>
+<b>experience</b>
+        </td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td class="nowrap">/sms/v1/teachers/{teacher-id}</td>
+      <td>Marks the specified teacher as having left. <div class="toggle-section">
+Supports these parameters:
+        
+<b>delete</b> - Optional. By default, this is set to false, i.e. a teacher is marked as having left the school rather than being deleted. If delete=true, then the teacher is marked deleted instead (and leaveDate is ignored in this case).
+
+<b>leaveDate</b> - For example,  "2015-12-31". This is needed only if delete=false.
+      </td>
+    </tr>
+</table>
+
+<h3>JSON result for a single teacher</h3>
+<code>
+    {
+        id: "3",
+        fullName: "Ryan Harris",
+        title: "Head of English Department",
+        gender: "Male"
+    }
+</code>
+
+<h3>Additional Fields</h3>
+
+<p>You can request additional fields by passing in the "fields" parameter with a comma-separated list. For example: "fields=cellPhone,homePhone".
+    
+Here is a list of supported fields, which are self-explanatory: firstName, middleName, familyName, employeeNumber, employmentDate, birthDate, title, email, homePhone, cellPhone, city, state, zip, room, hasLeft, deleted.
+</p>
+  
+<h2 id="students">Students</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/students</td>
+        <td>Returns the list of all students. <div class="toggle-section">
+<b>Searching</b>
+You can search by passing in the "search" parameter. For example: "search=Alvin".
+
+This will search for a match in the following fields: Student's full name, student number, and class name.
+    
+<b>Search by student numbers</b>
+You can search by a comma-separated list of student numbers by passing in the "studentNumbers" parameter. For example: "studentNumbers=000001,000002".
+  
+<b>Filtering</b>
+You can also filter the list of students by passing in one of the following filtering parameters.
+
+    showDeleted=true: Includes deleted students.
+    showHasLeft=true: Includes students who have graduated.
+    classId=12345: Filters for students in the specified class (grade level).
+    homeroomId=12345: Filters for students in the specified homeroom
+    parentId=12345: Filters for students of the specified parent
+    </div></td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/students/{student-id}</td>
+        <td>Returns the details of the specified student.</td>
+    </tr>
+    <tr>
+        <td>POST</td>
+        <td class="nowrap">/sms/v1/students</td>
+        <td>Adds or updates a student record. <div class="toggle-section">
+Example:
+<code>curl https://api.quickschools.com/sms/v1/students?apiKey=[YOUR API KEY] --data "fullName=Mary Smith&grade=1st Grade"
+</code>
+It returns the json object for the student that was created. An additional boolean field, "isExistingRecord", is also returned.
+
+The only required field is fullName. All other fields are optional. The supported fields are:
+
+<b>fullName</b> - If the full name matches an existing record, the existing record will be updated. Otherwise, a new record will be created.
+<b>studentId</b> - Pass this in if you have your own unique ID for the student.            
+<b>preferredName</b> - This is the student's preferred name.
+<b>grade</b> - This is the student's grade level, i.e. "1st Grade". It should match the class level names in QuickSchools exactly.
+<b>homeroomTeacherFullName</b> - This should match the teacher's full name exactly.
+<b>homeroomName</b> - Only used if your school uses custom homeroom names.
+<b>birthDate</b>
+<b>gender</b> - Can be either "male" or "female".
+<b>zip</b>
+<b>city</b>
+<b>state</b>
+<b>country</b>
+<b>fullAddress</b> - The student's full address in a single field, or just address line 1 and 2 if desired.
+<b>phone</b>
+<b>cellPhone</b>
+<b>email</b>
+<b>fax</b>
+<b>medicalProblems</b>
+<b>medicalNeeds</b>
+<b>medicationAllergies</b>
+<b>foodAllergies</b>
+<b>otherAllergies</b>
+<b>dietaryNeeds</b>
+<b>otherMedicalInformation</b>
+
+You can specify up to 2 parents. Just change the index of the field, i.e. parent2Name.
+
+<b>parent1Name</b>
+<b>parent1Relationship</b>
+<b>parent1AddressLine1</b>
+<b>parent1AddressLine2</b>
+<b>parent1City</b>
+<b>parent1State</b>
+<b>parent1Zip</b>
+<b>parent1Country</b>
+<b>parent1District</b>
+<b>parent1Email</b>
+<b>parent1HomePhone</b>
+<b>parent1CellPhone</b>
+<b>parent1BusinessPhone</b>
+<b>parent1Occupation</b>
+<b>parent1OtherInfo</b>
+</div>
+        </td>
+    </tr>
+</table>
+
+<h3>JSON result for a single student:</h3>
+<code>
+    {
+        id: "3",
+        fullName: "Ryan Harris",
+        preferredName: "Ryan",
+        classId: "234",
+        classCode: "G02",
+        className: "2nd Grade",
+        gender: "Male"
+    }
+</code>
+
+<h3>Additional Fields</h3>
+
+<p>You can request additional fields by passing in the "fields" parameter with a comma-separated list. For example: "fields=enrollmentDate,hasLeft".
+    
+Here is a list of supported fields, which are self-explanatory: studentNumber, birthDate, enrollmentDate, parents, parentOrder, siblings, homeroomId, homeroomTeacherId, homeroomTeacher, multiLineResidentialAddress, country, zip, state, city, phone, cellPhone, fax, email, nationality, confidentialInformation, firstName, middleName, familyName, deleted, hasLeft, isExpelled, customFields.
+
+Other fields which require explanation:
+  ssid: State-wide Student Identifier
+</p>
+
+<h2 id="parents">Parents</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/parents</td>
+        <td>Returns the list of all parents. <div class="toggle-section">
+<b>Filtering</b>
+You can also filter the list of parents by passing in one of the following filtering parameters.
+
+    showDeleted=true: Includes deleted parents.
+        </div></td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/parents/{parent-id}</td>
+        <td>Returns the details of the specified parent.</td>
+    </tr>
+    <tr>
+        <td>POST</td>
+        <td class="nowrap">/sms/v1/parents/{parent-id}</td>
+        <td>Updates an existing parent. <div class="toggle-section">
+Supports these optional parameters:
+<b>fullName</b>
+<b>cellPhone</b>
+<b>homePhone</b>
+<b>businessPhone</b>
+<b>email</b>         
+<b>address</b>
+<b>city</b>
+<b>state</b>
+<b>zip</b>
+<b>country</b>
+</div>
+</td>
+    </tr>
+</table>
+
+<h3>JSON result for a single parent</h3>
+<code>
+    {
+        id: "3",
+        fullName: "Ryan Harris"
+    }
+</code>
+
+<p>Notes:</p>
+
+<ul>
+    <li><b>Children:</b> You can get the list of children (students) for each parent. Add "fields=students" in the query.</li>
+</ul>
+
+<h3>Additional Fields</h3>
+
+<p>You can request additional fields by passing in the "fields" parameter with a comma-separated list. For example: "fields=cellPhone,homePhone".
+    
+Here is a list of supported fields, which are self-explanatory: firstName, middleName, familyName, email, homePhone, cellPhone, city, state, zip, country, deleted.
+</p>
+
+<h2 id="sections">Sections</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/sections</td>
+        <td>Returns the list of all course sections for the current active semester. Supports these additional parameters:
+            
+semesterId=12345: Returns the list of course sections for the specified semester.
+        </td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/sections/{section-id}</td>
+        <td>Returns the details of the specified course section.</td>
+    </tr>
+        <tr>
+        <td>POST</td>
+        <td class="nowrap">/sms/v1/sections</td>
+        <td>Creates a section.  <div class="toggle-section">
+Supports these required parameters:
+<b>classId</b>
+<b>sectionName</b>
+<b>sectionCode</b>
+<b>creditHours</b>
+<b>teacherIds</b> - This should be formatted as a json string. Essentially, you'll be passing a list of teacher ids. Example:
+
+<code>["4321","5678"]
+</code>
+</div></td>
+    </tr>
+    <tr>
+        <td>POST</td>
+        <td class="nowrap">/sms/v1/sections/{section-id}</td>
+                <td>Updates an existing section.  <div class="toggle-section">
+Supports these optional parameters:
+<b>sectionName</b>
+<b>sectionCode</b>
+<b>creditHours</b>
+<b>teacherIds</b> - This should be formatted as a json string. Essentially, you'll be passing a list of teacher ids. Example:
+
+<code>["4321","5678"]
+</code>
+</div></td>
+    </tr>
+</table>
+
+<h3>JSON result for a single subject section:</h3>
+<code>
+    {
+        id: "3",
+        sectionCode: "ENG-01",
+        sectionName: "English 01"
+        classId: "12993",
+        className: "5th Grade",
+        teachers: [{id: "6", fullName: "Maria Alexander", employeeNumber: "E-00001"}]
+    }
+</code>
+
+<p>Notes</p>
+<ul>
+    <li>Class refers to the grade level, such as 5th grade. Users can create custom grade levels.</li>
+    <li>A section has at least one teacher, possibly more.</li>
+</ul>
+
+<h2 id="section-enrollments">SectionEnrollments</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/sectionenrollments/{section-id}</td>
+        <td>Returns the enrollments for a specific course section.</td>
+    </tr>
+    <tr>
+        <td>POST</td>
+        <td class="nowrap">/sms/v1/sectionenrollments/{section-id}</td>
+        <td>Enrolls students into a specific course section. <div class="toggle-section">
+Supports this required parameter:
+<b>studentIds</b> - This should be formatted as a json string. Essentially, you'll be passing a list of student ids. Example:
+
+<code>["1234","8765"]
+</code>
+</div></td>
+    </tr>
+    <tr>
+        <td>DELETE</td>
+        <td class="nowrap">/sms/v1/sectionenrollments/{section-id}</td>
+                <td>Unenrolls students from a specific course section. <div class="toggle-section">
+Supports this required parameter:
+<b>studentIds</b> - This should be formatted as a json string. Essentially, you'll be passing a list of student ids. Example:
+
+<code>["1234","8765"]
+</code></td>
+    </tr>
+</table>
+
+<h3>JSON result for the enrollments of a single course section:</h3>
+<code>
+    {
+        id: "3",
+        students: [
+            {
+                id: "3",
+                fullName: "Jessica Lane"
+            },
+            {
+                id: "8",
+                fullName: "Ryan Alexander"
+            }
+        ]
+    }
+</code>
+
+<h2 id="student-sections">StudentSections</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/studentsections</td>
+        <td>Returns the list of students, and the course sections that each student is enrolled in, for the current active semester. Supports these additional parameters:
+            
+semesterId=12345: Returns the list of course sections for the specified semester.
+studentIds=3,4: Only returns data for the specified students.
+        </td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/studentsections/{student-id}</td>
+        <td>Returns the list of course sections that the specified student is enrolled in, for the current active semester. Supports these additional parameters:
+            
+semesterId=12345: Returns the list of course sections for the specified semester.
+        </td>
+    </tr>
+</table>
+
+<h3>JSON result for the sections that a student is taking:</h3>
+<code>
+    {
+        id: "3",
+        fullName: "Michelle Harris",
+        sections: [
+            {
+                id: "3",
+                sectionCode: "ENG-01",
+                sectionName: "English 01"
+            },
+            {
+                id: "4",
+                sectionCode: "ENG-02",
+                sectionName: "English 02"
+            }
+        ]
+    }
+</code>
+
+<h3>Additional Parameters</h3>
+
+<p>semesterId=12345: Returns the list of course sections for the specified semester.</p>
+  
+<h2 id="assignment">Assignments</h2>
+
+<p>Assignments refer to the columns in the gradebook.</p>
+
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/sections/{section-id}/assignments</td>
+        <td>Returns the list of all assignments in the specified course section.<div class="toggle-section">
+Supports the following parameters:
+
+<b>includeFinalGrades</b> - Optional. Set to true or false (default is false).
+</div></td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/assignments/{assignment-id}</td>
+        <td>Returns the details of a single assignment. </td>
+    </tr>
+    <tr>
+        <td>POST</td>
+        <td class="nowrap">/sms/v1/sections/{section-id}/assignments</td>
+        <td>Creates an assignment for the specified subject set.  <div class="toggle-section">
+Supports these parameters:
+<b>name</b>
+<b>date</b>
+<b>totalMarksPossible</b>
+<b>columnCategoryId</b> - If not given, the default category (usually "Assignment") will be used.
+<b>gradingScaleId</b> - If not given, the default grading scale (usually "Default") will be used.
+
+</div></td>
+    </tr>
+    <tr>
+        <td>POST</td>
+        <td class="nowrap">/sms/v1/assignments/{assignment-id}</td>
+        <td>Updates an existing assignment. See creation of an assignment above for the supported parameters.</td>
+    </tr>
+    <tr>
+        <td>DELETE</td>
+        <td class="nowrap">/sms/v1/sections/{section-id}/assignments/{assignment-id}</td>
+        <td>Deletes an existing assignment.</td>
+    </tr>
+</table>
+
+
+<h3>JSON result for a single assignment:</h3>
+<code>
+    {
+        id: "3432",
+        name: "HW #1",
+        date: "2013-10-01",
+        totalMarksPossible: 100,
+        categoryId: "23",
+        categoryName: "Assignment"
+        gradingScaleId: "405",
+        gradingScaleName: "Default",
+        isFinalGrade: false
+    }
+</code>
+
+<p>Notes:</p>
+
+<ul>
+    <li><b>sectionId:</b> You can get the section ID for each assignment. Add "fields=sectionId" in the query.</li>
+</ul>
+
+<h2 id="grades">Grades</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/grades</td>
+        <td>Returns the list of students and the grades achieved for the specified assignment. <div class="toggle-section">
+Supports the following parameters:
+
+<b>sectionId</b> - Required.
+<b>assignmentId</b> - Optional. If not set, all assignments in the section will be included.
+<b>includeOnlyFinalGrades</b> - Optional. Set to true or false (default is false).
+</div></td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/assignments/{assignment-id}/grades</td>
+        <td>Returns the list of students and the grades achieved for the specified assignment. <div class="toggle-section">
+Supports the following parameters:
+
+<b>includeOnlyFinalGrades</b> - Optional. Set to true or false (default is false).
+</div></td>
+    </tr>
+    <tr>
+        <td>POST</td>
+        <td class="nowrap">/sms/v1/grades</td>
+        <td>Updates the grades achieved by students for the specified assignment. <div class="toggle-section">
+Requires the following parameters:
+
+<b>sectionId</b>
+<b>assignmentId</b>
+<b>grades</b> - This should be formatted as a json string. Essentially, you'll be passing a list of students, and the marks for each student. Example:
+
+<code>[{
+    studentId: "3421",
+    marks: 83.5
+}, {
+    studentId, "3288",
+    marks: 63
+}]
+</code>
+</div></td>
+    </tr>
+</table>
+
+<h3>JSON result for a single grade:</h3>
+<code>
+    {
+        assignmentId: "23432",
+        isFinalGrade: false,
+        letterGrade: "A",
+        marks: 98,
+        studentId: 2911
+    }
+</code>
+
+<p>Notes:</p>
+
+<ul>
+    <li><b>date:</b> You can get the date for each grade, which is normally set via the Self-Paced Gradebook. Add "fields=date" in the query.</li>
+</ul>
+
+<h2 id="attendance">Attendance</h2>
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/students/{student-id}/attendance</td>
+        <td>Returns a paged list of dates for which attendance was taken for the specified student. <div class="toggle-section">
+The list of dates is sorted by the most recent date first. Example:
+        <code>[
+    {
+        date: "2013-11-04",
+        status: "P",
+        studentId : "1234"
+    },
+    {
+        date: "2013-11-02"
+        status: "A",
+         studentId : "1234",
+        remarks: "Absent Medical"
+    }
+]</code>
+
+Attendance status can be one of:
+
+    P: Present
+    A: Absent
+    T: Tardy
+    EA: Excused Absense
+    ET: Excused Tardy
+
+Remarks will be returned if any was set by the teacher.
+
+If you are taking period-based or subject-based attendance, then an additional "periods" parameter will be returned, which is a list of the attendance status for every period that attendance was taken. For example:
+        <code>[
+    {
+        date: "2013-11-04",
+        status: "P"
+        periods: [{
+            periodIndex: 0,
+            status: "P"
+        }, {
+            periodIndex: 1,
+            status: "A",
+            remarks: "Had the flu"
+        }]
+    }
+]</code>
+
+Optional parameters you can pass in:
+
+<b>beginDate</b>
+<b>endDate</b>
+        
+        </div></td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/students/{student-id}/attendance/{date}</td>
+        <td>Returns a single item, which is the student's attendance for the specified date. If none is found, the "success" attribute will be set to false.
+        </td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/attendance</td>
+        <td>Returns a paged list of dates for which attendance was taken. See retrieving by student ID above for the supported parameters. 
+</td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/attendance/{date}</td>
+        <td>Returns a paged list of each student's attendance for the specified date. 
+        </td>
+    </tr>
+    <tr>
+        <td>POST</td>
+        <td class="nowrap">/sms/v1/students/{student-id}/attendance/{date}</td>
+        <td>Sets the attendance for a particular date. <div class="toggle-section">
+You can pass in the following parameters:
+
+<b>status</b> - An attendance status like "P".
+<b>teacherId</b> - The teacher that is a homeroom teacher of the student.
+<b>description</b> - [optional] Information about the attendance taken. For example, it may specify the homeroom name.
+        </div></td>
+    </tr>
+    <tr>
+        <td>POST</td>
+        <td class="nowrap">/sms/v1/attendance/{date}</td>
+        <td>Sets the attendance for a particular date for multiple students. <div class="toggle-section">
+You can pass in the following parameters:
+
+<b>teacherId</b> - The teacher that is a homeroom teacher of the student.
+<b>attendance</b> - This should be formatted as a json string. Essentially, you'll be passing a list of students, and the status for each student. Example:
+
+<code>[{
+    studentId: "3421",
+    status: "P"
+}, {
+    studentId, "3288",
+    status: "P",
+    description: "A description"
+}]
+</code>
+Like the student ID version, <b>description</b> can be optionally passed in each object in <b>attendance</b>.
+
+    
+</div></td>
+    </tr>
+    <tr>
+        <td>DELETE</td>
+        <td class="nowrap">/sms/v1/students/{student-id}/attendance/{date}</td>
+        <td>Deletes the attendance for a particular date for the specified student.
+        </td>
+    </tr>
+    <tr>
+        <td>DELETE</td>
+        <td class="nowrap">/sms/v1/attendance/{date}</td>
+        <td>Deletes the attendance for a particular date for multiple students. <div class="toggle-section">
+You can pass in the following parameter:
+
+<b>studentIds</b> - This should be formatted as a json string. Essentially, you'll be passing a list of student ids. Example:
+
+<code>["3421","3288"]
+</code>
+</div></td>
+    </tr>
+</table>
+
+<h3>JSON result for a single attendance record:</h3>
+<code>
+    {
+        date: "2013-11-01",
+        status: "P",
+        studentId: "1234"
+    }
+</code>
+
+<h2 id="roles">Roles</h2>
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/roles</td>
+        <td>Returns the list of available roles.</td>
+   </tr>
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/roles/user</td>
+        <td>Returns the list of roles assigned to a particular user. <div class="toggle-section">
+Required fields:
+          <b>type</b>: One of “student”, “teacher” or “parent”.
+          <b>id</b>: The ID of the student, teacher or parent.
+        </div></td>
+   </tr>
+    <tr>
+        <td>POST</td>
+        <td class="nowrap">/sms/v1/roles/user</td>
+        <td>Assigns and unassigns roles for the specified user. <div class="toggle-section">
+For convenience, this method accepts the role Meta ID, rather than the role ID. This is an english-readable
+method of referring to a role that can be made consistent across all schools in a group.
+
+Required fields:
+          <b>type</b>: One of “student”, “teacher” or “parent”.
+          <b>id</b>: The ID of the student, teacher or parent.
+          <b>roleMetaIdsToAssign</b>: A list formatted as a json string. For example: ["schooladmin"]
+          <b>roleMetaIdsToUnassign</b>: A list formatted as a json string. For example: ["schooladmin"]
+          
+It will succeed even if assigning a role that the user already has, or unassigning a role that the user doesn't already have.
+A message string will be returned with information on what was actually done.
+          
+        </div></td>
+   </tr>
+</table>
+
+<h3>JSON result for a single attendance record:</h3>
+<code>
+    {
+        id: "uhc-13",
+        metaId: "schooladmin",
+        roleName: "School Admin"
+    }
+</code>
+
+  
+<h2 id="self">Self</h2>
+<h3>Resource URIs</h3>
+<table class="data">
+    <tr>
+        <td>GET</td>
+        <td class="nowrap">/sms/v1/self</td>
+        <td>Returns the details of the logged in user. For app store apps only.  <div class="toggle-section">
+<b>personType</b> can be one of:
+    "Student"
+    "Parent"
+    "Teacher"
+
+The following ID attributes are available for the given <b>personType</b>:
+    Student : <b>studentId</b>
+    Parent : <b>parentId</b>
+    Teacher : <b>teacherId</b>
+    
+This ID attribute value can then be used in other related resources for the logged in user, like retrieving the logged in student's attendance.
+        </div></td>
+    </tr>
+</table>
+
+<h3>JSON result for a self record:</h3>
+<code>
+    {
+        address: {
+            email: user@example.com
+        },
+        fullName: "John Doe",
+        personType: "Teacher",
+        teacherId: "56789",
+        userId: "12345"
+    }
+</code>
+</div>
+
+</body>
+</html>

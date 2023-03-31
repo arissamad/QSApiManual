@@ -1,0 +1,385 @@
+<html>
+<head>
+  <link href="reset.css" rel="stylesheet" type="text/css"></script>
+  <link href="manual.css" rel="stylesheet" type="text/css"></script>
+</head>
+
+<body>
+
+<div class="content">
+<h1 id="zapier-resources">Zapier API Resources</h1>
+<p>The following are the list of resources that you can query or modify.</p>
+
+<blockquote>
+  <ul>
+    <li>Teachers</li>
+    <li>Students</li>
+    <li>Parents</li>
+    <li>Sections</li>
+    <li>SectionEnrollments</li>
+    <li>AdmissionsApplications</li>
+  </ul>
+</blockquote>
+<!-- [TR-G2_20210129] See https://quickschools.monday.com/boards/859364313/pulses/978243981 -->
+<h2 id="teachers-zap">Teachers</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+  <tr>
+    <td>GET</td>
+    <td class="nowrap">/sms/v1/teachers-zap</td>
+    <td>For Zapier Trigger. Returns a list of Teachers <i>(latest 20 records)</i>. <div class="toggle-section">
+<!-- [TR-G8_20210614] See https://quickschools.monday.com/boards/859364313/pulses/1323538804 -->
+<b>Searching</b>
+You can search by passing in the "search" parameter. For example: "search=Samantha".
+
+This will search for a match in the following fields: Teachers's full name and employee number.
+
+<b>Filtering</b>
+You can also filter the list of teachers by passing in one of the following filtering parameters.
+
+  showDeleted=true: Includes deleted teachers.
+  showHasLeft=true: Includes teachers who have left and are no longer working at the school.
+
+<b>Group Schools (Optional)</b>
+You can specify the school within a group by passing in the "subdomain" parameter. For example: "subdomain=schoolCodeA".
+
+This will return only records from the specified school.
+
+</div></td>
+  </tr>
+</table>
+
+<h3>JSON result for a single teacher</h3>
+<code>
+  [
+    {
+      "gender": "Female",
+      "fullName": "Elya Nadzri",
+      "id": "207087",
+      "creationDate": "2022-06-01"
+    }
+  ]
+</code>
+
+<h3>Additional Fields</h3>
+<p>You can request additional fields by passing in the "fields" parameter with a comma-separated list. For example: "fields=cellPhone,homePhone".
+
+Here is a list of supported fields, which are self-explanatory: firstName, middleName, familyName, employeeNumber, employmentDate, birthDate, title, email, homePhone, cellPhone, city, state, zip, room, hasLeft, deleted.
+</p>
+<!-- [TR-G2_20210126] See https://quickschools.monday.com/boards/859364313/pulses/785405444 -->
+<h2 id="students-zap">Students</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+  <tr>
+    <td>GET</td>
+    <td class="nowrap">/sms/v1/students-zap</td>
+    <td>For Zapier Trigger. Returns a list of Students <i>(latest 20 records)</i> <div class="toggle-section">
+<!-- [TR-G8_20210614] See https://quickschools.monday.com/boards/859364313/pulses/1316253481 -->
+<b>Searching</b>
+You can search by passing in the "search" parameter. For example: "search=Alvin".
+
+This will search for a match in the following fields: Student's full name, student number, and class name.
+<!-- [TR-G820210614] See https://quickschools.monday.com/boards/859364313/pulses/1339536189 -->
+<b>Mode</b>
+You can specify if updated records will be incluided by passing in the "mode" parameter. For example: "mode=add". The acceptable values for this would be:
+
+  add - Returns only newly added records.
+  update - Returns new and updated records
+
+<b>Filtering</b>
+You can also filter the list of students by passing in one of the following filtering parameters.
+
+  showDeleted=true: Includes deleted students.
+  showHasLeft=true: Includes students who have graduated.
+
+<b>Group Schools (Optional)</b>
+You can specify the school within a group by passing in the "subdomain" parameter. For example: "subdomain=schoolCodeA".
+
+This will return only records from the specified school.
+
+</div></td>
+  </tr>
+  <tr>
+    <td>POST</td>
+    <td class="nowrap">/sms/v1/students-zap</td>
+    <td>Updates a student record. <div class="toggle-section">
+Example:
+<code>curl https://api.quickschools.com/sms/v1/students-zap?apiKey=[YOUR API KEY] --data "fullName=Mary Smith&grade=1st Grade"</code>
+
+It returns the json object for the student that was created. An additional boolean field, "isExistingRecord", is also returned.
+
+The only required field is the Student Number (studentId). All other fields are optional. The supported fields are:
+
+<b>fullName</b> - Student's Full Name
+<b>fistName</b> - Student's First Name. For Complex Student Names. Do not include if fullName provided
+<b>middleName</b> - Student's Middle Name. For Complex Student Names. Do not include if fullName provided
+<b>lastName</b> - Student's Last Name. For Complex Student Names. Do not include if fullName provided
+<b>studentId</b> - This is the student's Student Number. If the student number matches an existing record, the existing record will be updated. Otherwise, a new record will be created.
+<b>preferredName</b> - This is the student's preferred name.
+<b>grade</b> - This is the student's grade level, i.e. "1st Grade". It should match the class level names in QuickSchools exactly.
+<b>enrollmentDate</b> - must have "YYYY-MM-DD" format.
+<b>homeroomTeacherFullName</b> - This should match the teacher's full name exactly.
+<b>homeroomName</b> - Only used if your school uses custom homeroom names.
+<b>birthDate</b> - must have "YYYY-MM-DD" format.
+<b>gender</b> - Can be either "male" or "female".
+<b>nationality</b>
+<b>zip</b>
+<b>city</b>
+<b>state</b>
+<b>country</b>
+<b>fullAddress</b> - The student's full address in a single field, or just address line 1 and 2 if desired.
+<b>phone</b>
+<b>cellPhone</b>
+<b>email</b>
+<b>fax</b>
+<b>medicalProblems</b>
+<b>currentMedicationNeeds</b>
+<b>medicationAllergies</b>
+<b>foodAllergies</b>
+<b>otherAllergies</b>
+<b>specialDietaryNeeds</b>
+<b>additionalInformation</b>
+
+You can set additional fields related to student enrollment. These would require a boolean value (true/false):
+
+<b>reactivateIfInactive</b> - Re-enrolls student record if inactive <!-- [TR-G8_20210614] See https://quickschools.monday.com/boards/859364313/pulses/1355196267 -->
+<b>checkPreenrolled</b> - Checks pre-enrolled student records and updates accordingly <!-- [TR-G14_20211013] See https://quickschools.monday.com/boards/1099453259/pulses/1651142076 -->
+<b>preenrolledToRegular</b> - Change Pre-enrollment to Regular Enrollment <!-- [TR-G14_20210614] See https://quickschools.monday.com/boards/1099453259/pulses/1651142276 -->
+<b>regularToPreenrolled</b> - Change Regular Enrollment to Pre-enrollment <!-- [TR-G16_20211116] See https://quickschools.monday.com/boards/1099453259/pulses/1824118109 -->
+
+You can add/update Student Custom Fields by passing in the "customFields" field. <!-- [TR-G820210614] See https://quickschools.monday.com/boards/859364313/pulses/1347033638 -->
+This should be formatted as a json string. Essentially, you will be passing a list of key:value pairs where the key=customFieldName and the value=customFieldValue. For example: 
+<code>["Passport Number:A-0112","Visa Type:T3"]</code>
+
+If there is no existing customField with the specified customFieldName, a new field will be created.
+
+</div></td>
+  </tr>
+</table>
+
+<h3>JSON result for a single student:</h3>
+<code>
+  [
+    {
+      "zip": "0000",
+      "country": "United States",
+      "classCode": "05",
+      "city": "City",
+      "studentNumber": "S-000040",
+      "enrollmentDate": "2022-06-01",
+      "fullName": "Zapier Student",
+      "className": "5th Grade",
+      "updatedDate": "2022-12-16T02:48:22.757-1100",
+      "classId": "975203",
+      "state": "State",
+      "id": "1249819",
+      "email": "zapier.student@mailinator.com",
+      "multiLineResidentialAddress": "Home Address",
+      "username": "N/A"
+    },
+  ]
+</code>
+
+<h3>Additional Fields</h3> <!-- [TR-G8_20210614] See https://quickschools.monday.com/boards/859364313/pulses/1309200392 -->
+<p>You can request additional fields by passing in the "fields" parameter with a comma-separated list. For example: "fields=enrollmentDate,hasLeft".
+
+Here is a list of supported fields, which are self-explanatory: siblings, homeroomId, homeroomTeacherId, letoTags-StudentFlexi, homeroomTeacher, phone, cellPhone, fax, nationality, deleted, hasLeft, isExpelled, customFields.
+</p>
+
+<p>Notes:</p>
+<ul>
+  <li>Refrain from having a colon (:) in the Custom Field name/custom field value. Otherwise this would be interpreted as the key-value pair.</li>
+</ul>
+<!-- [TR-G8_20210603] See https://quickschools.monday.com/boards/859364313/pulses/1309200730 -->
+<h2 id="parents-zap">Parents</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+  <tr>
+    <td>GET</td>
+    <td class="nowrap">/sms/v1/parents-zap</td>
+    <td>Returns the list of all parents. <div class="toggle-section">
+<b>Searching</b>
+You can search by passing in the "search" parameter. For example: "search=John".
+
+This will search for a match in the following fields: Parent's full name.
+
+<b>Filtering</b>
+You can also filter the list of parents by passing in one of the following filtering parameters.
+
+  showDeleted=true: Includes deleted parents.
+
+<b>Group Schools (Optional)</b>
+You can specify the school within a group by passing in the "subdomain" parameter. For example: "subdomain=schoolCodeC".
+
+This will return only records from the specified school.
+
+</div></td>
+  </tr>
+</table>
+
+<h3>JSON result for a single parent</h3>
+<code>
+  [
+    {
+      "fullName": "Jesus Dacanay Peralta",
+      "id": "670809"
+    }
+  ]
+</code>
+
+<p>Notes:</p>
+<ul>
+  <li><b>Children:</b> You can get the list of children (students) for each parent. Add "fields=students" in the query.</li>
+</ul>
+
+<h3>Additional Fields</h3>
+<p>You can request additional fields by passing in the "fields" parameter with a comma-separated list. For example: "fields=cellPhone,homePhone".
+
+Here is a list of supported fields, which are self-explanatory: firstName, middleName, familyName, email, homePhone, cellPhone, city, state, zip, country, deleted.
+</p>
+<!-- [TR-G2_20210129] See https://quickschools.monday.com/boards/859364313/pulses/978244396 -->
+<h2 id="sections-zap">Sections</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+  <tr>
+    <td>GET</td>
+    <td class="nowrap">/sms/v1/sections-zap</td>
+    <td>For Zapier Trigger. Returns the list of all course sections sorted by creationDate in descending order <i>(latest 50 records)</i>.</td>
+  </tr>
+</table>
+
+<h3>JSON result for a single subject section:</h3>
+<code>
+  [
+    {
+      "sectionName": "Science",
+      "classId": "975200",
+      "teachers": [
+      {
+        "fullName": "Ezekiel White",
+        "id": "195352",
+        "employeeNumber": "E-00001"
+      }],
+      "sectionCode": "Science",
+      "className": "2nd Grade",
+      "id": "3108725",
+      "creationDate": "2022-05-31"
+    }
+  ]
+</code>
+
+<p>Notes</p>
+<ul>
+  <li>Class refers to the grade level, such as 5th grade. Users can create custom grade levels.</li>
+  <li>A section has at least one teacher, possibly more.</li>
+</ul>
+<!-- [TR-G2_20210202] https://quickschools.monday.com/boards/859364313/pulses/978244811 -->
+<h2 id="section-enrollments-zap">SectionEnrollments</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+  <tr>
+    <td>GET</td>
+    <td class="nowrap">/sms/v1/sectionenrollments-zap</td>
+    <td>For Zapier Trigger. Returns the list of all section enrollments sorted by ID in descending order <i>(latest 500 records)</i>.</td>
+  </tr>
+</table>
+
+<h3>JSON result for the enrollments of a single course section:</h3>
+<code>
+  [
+    {
+      "sectionName": "Science",
+      "studentStubId": "1249819",
+      "classSubjectSetId": "3108728",
+      "studentNumber": "S-000040",
+      "fullName": "Zapier Student",
+      "sectionCode": "Science",
+      "id": "22361071"
+    }
+  ]
+</code>
+<!-- [TR-G9_20210706] See https://quickschools.monday.com/boards/1099453259/pulses/1383063085 -->
+<h2 id="admissions-applications-zap">AdmissionsApplications</h2>
+
+<h3>Resource URIs</h3>
+<table class="data">
+  <tr>
+    <td>POST</td>
+    <td class="nowrap">/sms/v1/studentapplications-zap</td>
+    <td>Creates an Admissions Application Submission. <div class="toggle-section">
+Example:
+<code>curl https://api.quickschools.com/sms/v1/studentapplications-zap?apiKey=[YOUR API KEY] --data "applicantName=John Smith&preferredName=John&birthDate=2012-12-01&gender=Female&applicationRemarks=From Zapier&phone=123456&email=applicant@mailinator.com&currentSchool=Current School&currentGrade=Current Grade&enrollmentDate=2023-08-16"</code>
+<!-- [TR-I1_20230125] See https://quickschools.monday.com/boards/3670234679/pulses/2803287372 -->
+The following fields are required:
+
+<b>applicantName</b> - Applicant's Name
+<b>preferredName</b> - Preferred Name
+<b>birthDate</b> - must have "YYYY-MM-DD" format.
+<b>gender</b> - Can be either "male" or "female".
+<b>applicationRemarks</b> - Application Remarks.
+<b>phone</b>
+<b>email</b> - Applicant's Email Address.
+<b>currentSchool</b>
+<b>currentGrade</b>
+<b>enrollmentDate</b> - must have "YYYY-MM-DD" format.
+
+The following fielsd are optoinal:
+
+<b>address</b>
+<b>city</b>
+<b>state</b>
+<b>zip</b>
+<b>homePhone</b>
+<b>cellPhone</b>
+<b>fax</b>
+<b>studentEmail</b>
+<b>medicalProblems</b>
+<b>currentMedicationNeeds</b>
+<b>medicationAllergies</b>
+<b>foodAllergies</b>
+<b>otherAllergies</b>
+<b>specialDietaryNeeds</b>
+<b>additionalInformation</b>
+<!-- [TR-G820210614] See https://quickschools.monday.com/boards/859364313/pulses/1347033638 -->
+You can update Admissions Application Custom Fields by passing in the "customFields" field.
+This should be formatted as a json string. Essentially, you will be passing a list of key:value pairs where the key=customFieldName and the value=customFieldValue. For example:
+<code>["First Program Choice:Automotive","Second Program Choice:Bartending"]</code>
+
+If there is no existing customField with the specified customFieldName, a new field will be created.
+
+</div></td>
+  </tr>
+</table>
+
+<h3>JSON result for the admission application submission:</h3>
+<code>
+  [
+    {
+      "studentCurrentSchool": "Current School",
+      "medicalDeclaration": "",
+      "emailAddress": "applicant@mailinator.com",
+      "applicationRemarks": "Submitted via Zapier: From Zapier",
+      "studentCurrentYear": "Current Grade",
+      "applicationNumber": "A-000096",
+      "success": true,
+      "applicantFullName": "John Smith",
+      "contactNumber": "123456",
+      "id": "84252",
+      "applicationDate": "2023-02-11"
+    }
+  ]
+</code>
+
+<p>Notes:</p>
+<ul>
+  <li>Refrain from having a colon (:) in the Custom Field name/custom field value. Otherwise this would be interpreted as the key-value pair.</li>
+</ul>
+</div>
+
+</body>
+</html>

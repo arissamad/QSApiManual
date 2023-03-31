@@ -1,0 +1,44 @@
+<html>
+<head>
+  <link href="reset.css" rel="stylesheet" type="text/css"></script>
+  <link href="manual.css" rel="stylesheet" type="text/css"></script>
+</head>
+
+<body>
+
+<div class="content">
+<h1 id="native-apps">Calling the API from Native Apps</h1>
+<p>A "native" QuickSchools app is one that is developed using the App Developer Console and runs within the QuickSchools application. Contrast this with external apps running on a different site.</p>
+
+<p>Native apps call the API using specialized javascript methods we've prepared for you. You do not need an API key to make the calls. Rather, we authenticate and authorize against the currently logged-in user who is using your app.</p>
+
+<p>This does mean that there are restrictions on which api methods can be accssed by your app, based on who is using it. For example, if a parent or student is logged in, your app will get an authorization exception if it tries to make an API call to change grades.</p>
+
+If you'd like further information on building native QuickSchools apps, <a target="_blank" href="http://dev.quickschools.com">click here</a> to see the documentation.
+
+<h2>Making the API call from javascript</h2>
+<p>You can make GET, POST, PUT and DELETE calls to the API using either Rest.get(), Rest.post(), Rest.put() or Rest.del().</p>
+
+<ul>
+  <li>The first parameter is the API path.</li>
+  <li>The second parameter is a javascript object with the parameters that you want to send.</li>
+  <li>The third parameter is the context object for the callback.</li>
+  <li>The fourth parameter is the callback method.</li>
+</ul>
+
+<p>The following examples illustrate this.</p>
+
+<code>
+  Rest.get("/sms/v1/semesters", {}, this, function(returnData) {
+    // Process returnData which is a javascript object, e.g.:
+    var numItems = returnData.numItems;
+  });
+
+  Rest.post("/sms/v1/assignments", { subjectSetId: "123" }, this, function(returnData) {
+    // Process returnData
+  });
+</code>
+</div>
+
+</body>
+</html>
